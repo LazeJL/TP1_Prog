@@ -37,9 +37,7 @@ export function ProductFilters({ categories, onChange }: ProductFiltersProps) {
       />
       <Checkbox.Group value={selectedCategories} onChange={handleCategoryChange}>
         {categories.map((category) => (
-          <Checkbox key={category.id} value={category.slug}>
-            {category.slug}
-          </Checkbox>
+          <Checkbox key={category.id} value={category.slug} label={category.slug + " (" + category.products.length +")"}/>
         ))}
       </Checkbox.Group>
       <Button onClick={handleFilterSubmit}>Filtrer</Button>
