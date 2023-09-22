@@ -3,6 +3,8 @@ import { SectionContainer, BreadCrumbs} from 'tp-kit/components';
 import ProductList from './ProductList';
 
 export default function Home() {
+
+  const showFilters = false
   
   return (
     <main>
@@ -15,7 +17,7 @@ export default function Home() {
         ]}/>
       </SectionContainer>
 
-      <ProductList showFilters={false}/>
+      <ProductList showFilters={showFilters}/>
     </main>
   );
 }
