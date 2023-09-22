@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { SectionContainer, ProductGridLayout, ProductCardLayout, Button } from 'tp-kit/components';
 import { PRODUCTS_CATEGORY_DATA } from "tp-kit/data";
 import { ProductFilters } from '@/components/product-filters';
-import { filterProducts } from '@/utils/filter-products';
 import { ProductFilterResult } from '@/ProductFilterResult';
 
 export default function ProductList() {

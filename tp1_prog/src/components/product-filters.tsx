@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Checkbox, TextInput, Button } from '@mantine/core';
+import { Checkbox, TextInput} from '@mantine/core';
+import { Button } from 'tp-kit/components';
 import { ProductFilterResult } from '@/ProductFilterResult';
 import { ProductsCategoryData } from 'tp-kit/types';
 
