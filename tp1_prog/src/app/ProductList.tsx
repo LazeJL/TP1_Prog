@@ -10,11 +10,20 @@ export default function ProductList() {
     const [filteredCategories, setFilteredCategories] = useState(categories);
 
     const handleFilterChange = (filters: ProductFilterResult) => {
-        const newFilteredCategories = filterProducts(categories, filters);
+        let filteredCategories = [...categories];
+
+        console.log(filteredCategories) 
+  
+        if (filters.categoriesSlug.length > 0) {
+          filteredCategories = filteredCategories.filter(category =>
+            filters.categoriesSlug.includes(category.slug)
+          );
+        }
+
         console.log(filteredCategories)
-        setFilteredCategories(newFilteredCategories);
+        setFilteredCategories(filteredCategories);
         console.log(filteredCategories)
-    };
+      };
 
     return (
         <main>
