@@ -7,10 +7,9 @@ import { ProductsCategoryData } from 'tp-kit/types';
 interface ProductFiltersProps {
   categories: ProductsCategoryData[];
   onChange: (filters: ProductFilterResult) => void;
-  showFilters?: boolean;
 }
 
-export function ProductFilters({ categories, onChange, showFilters = false }: ProductFiltersProps) {
+export function ProductFilters({ categories, onChange}: ProductFiltersProps) {
   const [search, setSearch] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 

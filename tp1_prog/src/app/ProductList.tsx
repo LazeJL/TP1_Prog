@@ -31,19 +31,24 @@ export default function ProductList({showFilters}: ProductListProps) {
 
     return (
         <main>
-            <ProductFilters categories={categories} onChange={handleFilterChange} />
-            
-            {filteredCategories.map((category) => (
-                <SectionContainer key={category.id}>
-                    <Link href={`/${category.slug}`} passHref>
-                        <p>{category.name} ({category.products.length})</p>
-                    </Link>
-                    <ProductGridLayout products={category.products}>
-                        {(product) => (
-                            <ProductCardLayout key={product.id} product={product} button={<Button fullWidth variant="ghost">Ajouter au panier</Button>} />)}
-                    </ProductGridLayout>
-                </SectionContainer>
-            ))}
+          <div className="flex mx-5">
+            <div className="flex-auto mt-10">
+              <ProductFilters categories={categories} onChange={handleFilterChange} />
+            </div>
+            <div className="flex-auto">
+              {filteredCategories.map((category) => (
+                  <SectionContainer key={category.id}>
+                      <Link href={`/${category.slug}`} passHref>
+                          <p>{category.name} ({category.products.length})</p>
+                      </Link>
+                      <ProductGridLayout products={category.products}>
+                          {(product) => (
+                              <ProductCardLayout key={product.id} product={product} button={<Button fullWidth variant="ghost">Ajouter au panier</Button>} />)}
+                      </ProductGridLayout>
+                  </SectionContainer>
+              ))}
+            </div>
+          </div>
         </main>
     );
 }

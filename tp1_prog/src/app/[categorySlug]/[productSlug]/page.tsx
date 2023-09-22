@@ -45,7 +45,7 @@ export default function Product({ params }: NextPageProps<Props>) {
         )}
       </ProductGridLayout>
 
-      <Link href={`/category/${category.slug}`} passHref>
+      <Link href={`/${category.slug}`} passHref>
         <p>Retour à la catégorie {category.name}</p>
       </Link>
     </div>
