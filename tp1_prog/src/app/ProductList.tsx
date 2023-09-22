@@ -35,7 +35,7 @@ export default function ProductList({showFilters}: ProductListProps) {
             
             {filteredCategories.map((category) => (
                 <SectionContainer key={category.id}>
-                    <Link href={`/category/${category.slug}`} passHref>
+                    <Link href={`/${category.slug}`} passHref>
                         <p>{category.name} ({category.products.length})</p>
                     </Link>
                     <ProductGridLayout products={category.products}>
