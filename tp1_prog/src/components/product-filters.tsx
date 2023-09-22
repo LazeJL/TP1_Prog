@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { Checkbox, TextInput} from '@mantine/core';
 import { Button } from 'tp-kit/components';
-import { ProductFilterResult } from '@/ProductFilterResult';
+import { ProductFilterResult } from '@/types';
 import { ProductsCategoryData } from 'tp-kit/types';
 
 interface ProductFiltersProps {
   categories: ProductsCategoryData[];
   onChange: (filters: ProductFilterResult) => void;
+  showFilters?: boolean;
 }
 
-export function ProductFilters({ categories, onChange }: ProductFiltersProps) {
+export function ProductFilters({ categories, onChange, showFilters = false }: ProductFiltersProps) {
   const [search, setSearch] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 

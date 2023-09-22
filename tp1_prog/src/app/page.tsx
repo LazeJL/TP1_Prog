@@ -15,7 +15,7 @@ export default function Home() {
         ]}/>
       </SectionContainer>
 
-      <ProductList/>
+      <ProductList showFilters={false}/>
     </main>
   );
 }

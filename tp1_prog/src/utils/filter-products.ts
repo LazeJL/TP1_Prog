@@ -1,7 +1,5 @@
 import { ProductsCategoryData } from "tp-kit/types";
-import { ProductFilterResult } from "@/ProductFilterResult";
-
- 
+import { ProductFilterResult } from "@/types";
 
 export function filterProducts(
   categories: ProductsCategoryData[],
