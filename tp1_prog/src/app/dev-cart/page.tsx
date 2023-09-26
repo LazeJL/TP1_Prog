@@ -40,7 +40,7 @@ export default function DevCartPage() {
           <ProductCartLine
             key={index}
             product={item.product}
-            quantity={item.quantity}
+            qty={item.quantity}
           />
         ))}
 
