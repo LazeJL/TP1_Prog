@@ -1,9 +1,19 @@
-"use client";
+import React from "react";
+import { Button, ProductCardLayout, SectionContainer, ProductCartLine } from "tp-kit/components";
 import { PRODUCTS_CATEGORY_DATA } from "tp-kit/data";
-import { Button, ProductCardLayout, SectionContainer } from "tp-kit/components";
+
 const products = PRODUCTS_CATEGORY_DATA[0].products.slice(0, 3);
 
 export default function DevCartPage() {
+  const cartItems = [
+    { product: products[0], quantity: 1 },
+    { product: products[1], quantity: 2 },
+  ];
+
+  const total = cartItems.reduce((acc, item) => {
+    return acc + item.product.price * item.quantity;
+  }, 0);
+
   return (
     <SectionContainer
       className="py-36"
@@ -23,9 +33,29 @@ export default function DevCartPage() {
 
       {/* Panier */}
       <section className="w-full lg:w-1/3 space-y-8">
-				
-				<Button variant={"outline"} fullWidth>Vider le panier</Button>
-			</section>
+        <h2 className="text-2xl font-bold">Panier</h2>
+
+        {/* Afficher les lignes du panier */}
+        {cartItems.map((item, index) => (
+          <ProductCartLine
+            key={index}
+            product={item.product}
+            quantity={item.quantity}
+          />
+        ))}
+
+        {/* Afficher le total du panier */}
+        <div className="flex justify-between items-center">
+          <span className="text-lg font-semibold">Total :</span>
+          <span className="text-lg">{total} €</span>
+        </div>
+
+        {/* Bouton pour vider le panier */}
+        <Button variant={"outline"} fullWidth>Vider le panier</Button>
+
+        {/* Bouton pour commander */}
+        <Button variant={"primary"} fullWidth>Commander</Button>
+      </section>
       {/* /Panier */}
     </SectionContainer>
   );
