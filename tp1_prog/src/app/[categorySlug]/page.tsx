@@ -1,29 +1,55 @@
-import React from 'react';
+import ProductList from '@/components/product-list';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation'
+import { BreadCrumbs, SectionContainer } from 'tp-kit/components';
 import { PRODUCTS_CATEGORY_DATA } from "tp-kit/data";
-import { NextPageProps } from '@/types';
-import { Button, ProductCardLayout, ProductGridLayout, SectionContainer } from 'tp-kit/components';
-import Link from 'next/link';
+const categories = PRODUCTS_CATEGORY_DATA;
+
+type NextPageProps<T = Record<string, string>> = {
+  params: T,
+  searchParams: { [key: string]: string | string[] | undefined }
+}
 
 type Props = {
-  categorySlug: string;
-};
+  categorySlug : string
+}
 
-export default function Category({ params }: NextPageProps<Props>) {
-  const category = PRODUCTS_CATEGORY_DATA.find(cat => cat.slug === params.categorySlug);
+export async function generateMetadata({params} : NextPageProps<Props>) : Promise<Metadata> {
+  const currentcategory = categories.filter(category => {
+    return category.slug == params.categorySlug
+  })[0]
 
-  if (!category) {
-    return <div>Catégorie non trouvée</div>;
+  if (!currentcategory) notFound();
+
+  return {
+    title: currentcategory.name,
+    description: "Trouvez votre inspiration avec un vaste choix de boissons Starbucks parmi nos produits " + currentcategory.name
   }
+}
 
-  return (
-    <SectionContainer key={category.id}>
-      <Link href={`/${category.slug}`} passHref>
-        <p>{category.name} ({category.products.length})</p>
-      </Link>
-      <ProductGridLayout products={category.products}>
-        {(product) => (
-          <ProductCardLayout key={product.id} product={product} button={<Button fullWidth variant="ghost">Ajouter au panier</Button>} />)}
-      </ProductGridLayout>
-    </SectionContainer>
-  );
+export default function Home({params} : NextPageProps<Props>) {
+  const currentcategories = categories.filter(category => {
+    return category.slug == params.categorySlug
+  })[0]
+
+  if (!currentcategories) notFound();
+
+  return ( 
+    <main>
+      <SectionContainer>
+        <BreadCrumbs
+          items={[
+            {
+              label: 'Accueil',
+              url: '/'
+            },{
+              label: currentcategories.name,
+              url: '/'+params.categorySlug
+            }
+          ]}
+        />
+        </SectionContainer>
+        <ProductList showFilters={false} categories={[currentcategories]}/>
+    </main>
+  )
 }

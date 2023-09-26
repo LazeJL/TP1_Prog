@@ -1,47 +1,36 @@
-import React, { useState } from 'react';
-import { Checkbox, TextInput} from '@mantine/core';
+"use client";
+
 import { Button } from 'tp-kit/components';
+import { TextInput, Checkbox, Group } from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { FormEventHandler, useMemo } from 'react';
+import { ProductsCategoryData } from "tp-kit/types";
 import { ProductFilterResult } from '@/types';
-import { ProductsCategoryData } from 'tp-kit/types';
 
-interface ProductFiltersProps {
-  categories: ProductsCategoryData[];
-  onChange: (filters: ProductFilterResult) => void;
-}
+type Props = {categories: ProductsCategoryData[], onChange : (param : ProductFilterResult) => void}
 
-export function ProductFilters({ categories, onChange}: ProductFiltersProps) {
-  const [search, setSearch] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+export function ProductFilters({categories, onChange} : Props) {
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  };
+    const form = useForm({
+        initialValues: {
+            categoriesSlug: [],
+            search: ""
+        }
+    })
 
-  const handleCategoryChange = (values: string[]) => {
-    setSelectedCategories(values);
-  };
+    function handleFilter(values : ProductFilterResult) {
+        onChange(values)
+    }
 
-  const handleFilterSubmit = () => {
-    const filters: ProductFilterResult = {
-      categoriesSlug: selectedCategories,
-      search,
-    };
-    onChange(filters);
-  };
-
-  return (
-    <div>
-      <TextInput
-        value={search}
-        onChange={handleSearchChange}
-        placeholder="Entrez une boisson"
-      />
-      <Checkbox.Group value={selectedCategories} onChange={handleCategoryChange}>
-        {categories.map((category) => (
-          <Checkbox key={category.id} value={category.slug} label={category.slug + " (" + category.products.length +")"}/>
-        ))}
-      </Checkbox.Group>
-      <Button onClick={handleFilterSubmit}>Filtrer</Button>
-    </div>
-  );
+    return (
+        <main>
+            <form onSubmit={form.onSubmit((values) => handleFilter(values))}>
+                <TextInput className='mb-3' id="search" {...form.getInputProps("search")}></TextInput>
+                <Checkbox.Group className='flex flex-col gap-3' {...form.getInputProps("categoriesSlug")}>
+                    {categories.map((category,index) => <Checkbox key={index} value={category.slug} label={category.name}></Checkbox>)}
+                </Checkbox.Group>
+                <Button className='mt-5' type="submit">Filter</Button>
+            </form>
+        </main>
+    )
 }
