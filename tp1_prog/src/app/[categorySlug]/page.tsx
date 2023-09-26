@@ -1,55 +1,36 @@
-import ProductList from '@/components/product-list';
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation'
-import { BreadCrumbs, SectionContainer } from 'tp-kit/components';
+import { BreadCrumbs, SectionContainer } from "tp-kit/components";
 import { PRODUCTS_CATEGORY_DATA } from "tp-kit/data";
-const categories = PRODUCTS_CATEGORY_DATA;
-
-type NextPageProps<T = Record<string, string>> = {
-  params: T,
-  searchParams: { [key: string]: string | string[] | undefined }
-}
+import { ProductList } from "../../components/product-list";
+import { NextPageProps } from "../../types";
+import { Metadata } from "next";
+const category = PRODUCTS_CATEGORY_DATA[0];
 
 type Props = {
-  categorySlug : string
-}
+  categorySlug: string;
+};
 
-export async function generateMetadata({params} : NextPageProps<Props>) : Promise<Metadata> {
-  const currentcategory = categories.filter(category => {
-    return category.slug == params.categorySlug
-  })[0]
-
-  if (!currentcategory) notFound();
-
+export async function generateMetadata({ params, searchParams} : NextPageProps<Props>) : Promise<Metadata> {
   return {
-    title: currentcategory.name,
-    description: "Trouvez votre inspiration avec un vaste choix de boissons Starbucks parmi nos produits " + currentcategory.name
+    title: category.name,
+    description: `Trouvez votre inspiration avec un vaste choix de boissons Starbucks parmi nos produits ${category.name}`
   }
 }
 
-export default function Home({params} : NextPageProps<Props>) {
-  const currentcategories = categories.filter(category => {
-    return category.slug == params.categorySlug
-  })[0]
+export default function CategoryPage({params}: NextPageProps<Props>) {
+  return <SectionContainer>
+    <BreadCrumbs 
+      items={[
+        {
+          label: "Accueil",
+          url: "/"
+        },
+        {
+          label: category.name,
+          url: `/${category.slug}`
+        }
+      ]}
+    />
 
-  if (!currentcategories) notFound();
-
-  return ( 
-    <main>
-      <SectionContainer>
-        <BreadCrumbs
-          items={[
-            {
-              label: 'Accueil',
-              url: '/'
-            },{
-              label: currentcategories.name,
-              url: '/'+params.categorySlug
-            }
-          ]}
-        />
-        </SectionContainer>
-        <ProductList showFilters={false} categories={[currentcategories]}/>
-    </main>
-  )
+    <ProductList categories={[category]} />
+  </SectionContainer>
 }

@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .link {
-    @apply hover:text-brand focus:text-green-700
+  @apply transition-colors hover:text-brand active:text-brand-600 cursor-pointer;
 }

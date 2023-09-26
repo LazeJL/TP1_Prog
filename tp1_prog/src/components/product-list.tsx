@@ -1,68 +1,54 @@
 "use client";
-
+import { FC, memo, useMemo, useState } from "react";
+import { ProductFilters } from "./product-filters";
 import { ProductsCategoryData } from "tp-kit/types";
-import { ProductFilters } from "./product-filters"
-import { BreadCrumbs, Button, Heading, ProductCardLayout, ProductGridLayout, SectionContainer } from 'tp-kit/components';
-import { useEffect, useMemo, useState } from "react";
-import { ProductFilterResult } from "@/types";
-import { filterProducts } from "@/utils/filter-products";
+import { Button, ProductCardLayout, ProductGridLayout } from "tp-kit/components";
+import { ProductFiltersResult } from "../types";
+import { filterProducts } from "../utils/filter-products";
 import Link from "next/link";
 
-type Props = {categories : ProductsCategoryData[], showFilters: boolean}
+type Props = {
+  categories: ProductsCategoryData[];
+  showFilters?: boolean
+};
 
-export default function ProductList({categories, showFilters = false} : Props) {
+const ProductList: FC<Props> = memo(function ({ categories, showFilters = false }) {
+  const [filters, setFilters] = useState<ProductFiltersResult | undefined>();
+  const filteredCategories = useMemo(() => filterProducts(categories, filters), [filters, categories]);
 
-    const [filter, setFilter] = useState<ProductFilterResult>({
-      categoriesSlug: [],
-      search: ""
-    })
+  return (
+    <div className="flex flex-row gap-8">
+      {/* Filters */}
+      {showFilters && <div className="w-full max-w-[270px]">
+        <ProductFilters categories={categories} onChange={setFilters} />
+      </div>}
 
-    // const [filtered, setFiltered] = useState<ProductsCategoryData[]>([...categories])
+      {/* Grille Produit */}
+      <div className="flex-1 space-y-24">
+        {filteredCategories.map((cat) => (
+          <section key={cat.id}>
+            <h2 className="text-lg font-semibold mb-8 tracking-tight">
+              <Link href={`/${cat.slug}`} className="link">{cat.name} ({cat.products.length})</Link>
+            </h2>
 
-    //useEffect(
-      //() => setFiltered([...filterProducts(categories, filter)]), [categories, filter]
-    //)
-
-    const filtered = useMemo(() => filterProducts(categories, filter), [categories, filter]);
-
-    function updateList(filter : ProductFilterResult) {
-      setFilter({
-        categoriesSlug: filter.categoriesSlug,
-        search: filter.search
-      })
-    }
-    
-    console.log(categories)
-
-    return (
-        <div className="flex">
-        <SectionContainer>
-          {showFilters ? <ProductFilters categories={categories} onChange={updateList}/> : ""}
-        </SectionContainer>
-        <div className="flex-1">
-        {filtered.map((category,index) => <SectionContainer key={index}>
-            <Link className="link" href={category.slug}><Heading as="h1" size="md" weight="bold">{category.name + '(' + category.products.length + ')'}</Heading></Link>
-            
-  
-            <ProductGridLayout products={category.products}>
-              {(product) => <ProductCardLayout key={product.id} button={<Button variant="ghost">Ajouter au panier</Button>}
-                  product={{
-                    desc: product.desc,
-                    id: product.id,
-                    img: product.img,
-                    name: product.name,
-                    path: product.path,
-                    price: product.price,
-                    slug: product.slug}}
-              />}
-  
+            <ProductGridLayout products={cat.products}>
+              {(product) => (
+                <ProductCardLayout
+                  product={product}
+                  button={
+                    <Button variant="ghost" className="flex-1 !py-4">
+                      Ajouter au panier
+                    </Button>
+                  }
+                />
+              )}
             </ProductGridLayout>
-            
-          </SectionContainer>)}
-        </div>
-        
-        </div>
-        
-    )
+          </section>
+        ))}
+      </div>
+    </div>
+  );
+});
 
-}
+ProductList.displayName = "ProductList";
+export { ProductList };

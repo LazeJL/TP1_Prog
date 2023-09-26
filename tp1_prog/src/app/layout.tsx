@@ -1,17 +1,24 @@
-import Providers from '@/components/providers'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Lexend } from 'next/font/google'
-import { Footer } from 'tp-kit/components'
-import Menu from '@/components/menu'
+import { Providers } from '../components/providers';
+import { Footer } from 'tp-kit/components/footer';
+import { Menu } from '../components/menu';
 
-const inter = Lexend({ subsets: ['latin'] })
+const font = Lexend({
+  subsets: ['latin'],
+  weight: ['400', '600']
+});
 
 export const metadata: Metadata = {
   title: {
+    default: 'Starbucks',
     template: '%s - Starbucks',
-    default: 'Starbucks'
   },
+  robots: {
+    index: false,
+    follow: false
+  }
 }
 
 export default function RootLayout({
@@ -20,11 +27,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <header><Menu/></header>
-        <Providers font={inter}>{children}</Providers>
-        <Footer/>
+    <html lang="fr">
+      <body className={font.className}>
+        <Menu />
+
+        <Providers font={font}>
+          {children}
+        </Providers>
+
+        <Footer />
       </body>
     </html>
   )
