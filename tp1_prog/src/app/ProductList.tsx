@@ -4,6 +4,7 @@ import { PRODUCTS_CATEGORY_DATA } from "tp-kit/data";
 import { ProductFilters } from '@/components/product-filters';
 import { ProductFilterResult } from '@/types';
 import Link from 'next/link';
+import { addLine } from '@/hooks/use-cart';
 
 interface ProductListProps {
     showFilters: boolean;
@@ -43,7 +44,7 @@ export default function ProductList({showFilters}: ProductListProps) {
                       </Link>
                       <ProductGridLayout products={category.products}>
                           {(product) => (
-                              <ProductCardLayout key={product.id} product={product} button={<Button fullWidth variant="ghost">Ajouter au panier</Button>} />)}
+                              <ProductCardLayout key={product.id} product={product} button={<Button fullWidth variant="ghost" onClick={() => addLine(product.id)}>Ajouter au panier</Button>} />)}
                       </ProductGridLayout>
                   </SectionContainer>
               ))}
