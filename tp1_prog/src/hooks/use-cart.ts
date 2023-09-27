@@ -12,11 +12,13 @@ let cart: ProductLineData[] = [];
  */
  export function addLine(product: ProductData) {
     const existingLine = cart.find((line) => line.product === product);
+    console.log(cart)
   
     if (existingLine) {
       existingLine.qty += 1;
     } else {
       cart.push({ product, qty: 1 });
+      console.log(cart)
     }
   }
   

@@ -1,3 +1,5 @@
+"use client";
+import { addLine } from "@/hooks/use-cart";
 import React from "react";
 import { Button, ProductCardLayout, SectionContainer, ProductCartLine } from "tp-kit/components";
 import { PRODUCTS_CATEGORY_DATA } from "tp-kit/data";
@@ -25,7 +27,7 @@ export default function DevCartPage() {
           <ProductCardLayout
             key={product.id}
             product={product}
-            button={<Button variant={"ghost"} fullWidth>Ajouter au panier</Button>}
+            button={<Button variant={"ghost"} onClick={() => addLine(product)} fullWidth >Ajouter au panier</Button>}
           />
         ))}
       </section>
@@ -40,8 +42,11 @@ export default function DevCartPage() {
           <ProductCartLine
             key={index}
             product={item.product}
-            qty={item.quantity}
-          />
+            qty={item.quantity} onDelete={function (): void {
+              throw new Error("Function not implemented.");
+            } } onQtyChange={function (qty: number): void {
+              throw new Error("Function not implemented.");
+            } }/>
         ))}
 
         {/* Afficher le total du panier */}

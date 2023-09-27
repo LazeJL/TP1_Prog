@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SectionContainer, ProductGridLayout, ProductCardLayout, Button } from 'tp-kit/components';
 import { PRODUCTS_CATEGORY_DATA } from "tp-kit/data";
 import { ProductFilters } from '@/components/product-filters';
-import { ProductFilterResult } from '@/types';
+import { ProductFiltersResult } from '@/types';
 import Link from 'next/link';
 import { addLine } from '@/hooks/use-cart';
 
@@ -14,14 +14,14 @@ export default function ProductList({showFilters}: ProductListProps) {
     const categories = PRODUCTS_CATEGORY_DATA;
     const [filteredCategories, setFilteredCategories] = useState(categories);
 
-    const handleFilterChange = (filters: ProductFilterResult) => {
+    const handleFilterChange = (filters: ProductFiltersResult) => {
         let filteredCategories = [...categories];
 
         console.log(filteredCategories) 
   
-        if (filters.categoriesSlug.length > 0) {
+        if (filters.categoriesSlugs.length > 0) {
           filteredCategories = filteredCategories.filter(category =>
-            filters.categoriesSlug.includes(category.slug)
+            filters.categoriesSlugs.includes(category.slug)
           );
         }
 
@@ -44,7 +44,7 @@ export default function ProductList({showFilters}: ProductListProps) {
                       </Link>
                       <ProductGridLayout products={category.products}>
                           {(product) => (
-                              <ProductCardLayout key={product.id} product={product} button={<Button fullWidth variant="ghost" onClick={() => addLine(product.id)}>Ajouter au panier</Button>} />)}
+                              <ProductCardLayout key={product.id} product={product} button={<Button fullWidth variant="ghost" onClick={() => addLine(product)}>Ajouter au panier</Button>} />)}
                       </ProductGridLayout>
                   </SectionContainer>
               ))}
