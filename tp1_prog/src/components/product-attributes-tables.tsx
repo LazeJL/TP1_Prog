@@ -1,4 +1,4 @@
-import { ProductAttribute } from "@/types"
+import { ProductAttribute } from './product-attributes-table'
 import { ProductRating } from "tp-kit/components"
 import styles from '../app/product-attributes-table.module.css'
 

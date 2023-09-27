@@ -1,71 +1,86 @@
-import { ProductLineData } from "@/types";
-import { ProductData } from "../../tp-kit/types";
+import { create } from 'zustand';
+import {CartData, ProductLineData} from "../types";
+import {ProductData} from "tp-kit/types";
 
-// Déclarez une variable pour stocker le panier, par exemple :
-let cart: ProductLineData[] = [];
+export const useStore = create((set) => ({
+    lines: [] as ProductLineData[],
+}))
 
 /**
  * Ajoute une nouvelle ligne au panier.
  * Si le produit est déjà dans le panier, augmente la quantité de 1.
- * 
- * @param product 
+ *
+ * @param product
  */
- export function addLine(product: ProductData) {
-    const existingLine = cart.find((line) => line.product === product);
-    console.log(cart)
-  
-    if (existingLine) {
-      existingLine.qty += 1;
-    } else {
-      cart.push({ product, qty: 1 });
-      console.log(cart)
-    }
-  }
-  
-  
-
-/**
- * Modifie une ligne produit du panier
- * 
- * @param line 
- */
-export function updateLine(line: ProductLineData) {
-  const existingLineIndex = cart.findIndex((l) => l.product === line.product);
-
-  if (existingLineIndex !== -1) {
-    cart[existingLineIndex] = line;
-  }
+export function addLine(product: ProductData) {
+    useStore.setState((state: CartData) => {
+        const line = state.lines.find((l) => l.product.id === product.id)
+        if (line) {
+            line.qty++
+            return {
+                lines: state.lines.map((l) => {
+                    if (l.product.id === product.id) {
+                        return line
+                    }
+                    return l
+                }),
+            }
+        }
+        return {
+            lines: [...state.lines, { product, qty: 1 }],
+        }
+    })
 }
 
 /**
- * Supprime la ligne produit du panier 
- * 
- * @param productId 
- * @returns 
+ * Modifie une ligne produit du panier
+ *
+ * @param line
  */
- export function removeLine(productId: number) {
-    cart = cart.filter((line) => line.product.id !== productId);
-  }
-  
-  
+export function updateLine(line: ProductLineData) {
+    useStore.setState((state: CartData) => {
+        return {
+            lines: state.lines.map((l) => {
+                if (l.product.id === line.product.id) {
+                    return line
+                }
+                return l
+            }),
+        }
+    })
+}
+
+/**
+ * Supprime la ligne produit du panier
+ *
+ * @param productId
+ * @returns
+ */
+export function removeLine(productId: number) {
+    useStore.setState((state: CartData) => {
+        return {
+            lines: state.lines.filter((l) => l.product.id !== productId),
+        }
+    })
+}
 
 /**
  * Vide le contenu du panier actuel
  */
 export function clearCart() {
-  cart = [];
+    useStore.setState({ lines: [] })
 }
 
 /**
  * Calcule le total d'une ligne du panier
  */
 export function computeLineSubTotal(line: ProductLineData): number {
-  return line.product.price * line.qty;
+    return line.product.price * line.qty
 }
 
 /**
  * Calcule le total du panier
  */
 export function computeCartTotal(lines: ProductLineData[]): number {
-  return lines.reduce((total, line) => total + computeLineSubTotal(line), 0);
+    return lines.reduce((acc, line) => acc + computeLineSubTotal(line), 0)
 }
