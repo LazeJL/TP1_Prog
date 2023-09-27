@@ -4,6 +4,7 @@ import { Button, ProductCardLayout, SectionContainer, ProductCartLine } from "tp
 import { PRODUCTS_CATEGORY_DATA } from "tp-kit/data";
 import { useStore, computeCartTotal, clearCart, addLine, removeLine, updateLine } from "../../hooks/use-cart";
 import Cart from "@/components/cart";
+import CartCounter from "@/components/cartCounter";
 
 const products = PRODUCTS_CATEGORY_DATA[0].products.slice(0, 3);
 
@@ -46,6 +47,7 @@ export default function DevCartPage() {
             <section className="w-full lg:w-1/3 space-y-8">
                 <h2 className="text-2xl font-bold">Panier</h2>
 
+                <CartCounter/>
                 <Cart/>
 
                 {/* Afficher le total du panier */}
