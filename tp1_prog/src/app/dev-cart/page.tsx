@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Button, ProductCardLayout, SectionContainer, ProductCartLine } from "tp-kit/components";
 import { PRODUCTS_CATEGORY_DATA } from "tp-kit/data";
 import { useStore, computeCartTotal, clearCart, addLine, removeLine, updateLine } from "../../hooks/use-cart";
+import Cart from "@/components/cart";
 
 const products = PRODUCTS_CATEGORY_DATA[0].products.slice(0, 3);
 
@@ -45,23 +46,7 @@ export default function DevCartPage() {
             <section className="w-full lg:w-1/3 space-y-8">
                 <h2 className="text-2xl font-bold">Panier</h2>
 
-                {cartItems.map((line) => (
-                  <ProductCartLine
-                    className={"mb-4"}
-                    key={line.product.id}
-                    product={line.product}
-                    qty={line.qty}
-                    onDelete={() => {
-                      removeLine(line.product.id);
-                    }}
-                    onQtyChange={(qty) => {
-                      if (qty === 0) {
-                        removeLine(line.product.id);
-                      } else {
-                        updateLine({product: line.product, qty: qty});
-                      }
-                    }}
-                />))}
+                <Cart/>
 
                 {/* Afficher le total du panier */}
                 <div className="flex justify-between items-center">
