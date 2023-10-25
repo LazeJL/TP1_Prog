@@ -2,16 +2,15 @@
 import React, { useState, useEffect } from "react";
 import { Button, ProductCardLayout, SectionContainer, ProductCartLine } from "tp-kit/components";
 import { PRODUCTS_CATEGORY_DATA } from "tp-kit/data";
-import { useStore, computeCartTotal, clearCart, addLine, removeLine, updateLine } from "../../hooks/use-cart";
-import Cart from "@/components/cart";
-import CartCounter from "@/components/cartCounter";
+import {useStore, computeCartTotal, clearCart, addLine, removeLine, updateLine} from "../../hooks/use-cart";
+import Cart  from "../../components/Cart";
+import CartCounter from "../../components/CartCounter";
 
 const products = PRODUCTS_CATEGORY_DATA[0].products.slice(0, 3);
 
 export default function DevCartPage() {
     const cartItems = useStore((state) => state.lines);
 
-    // Calculer le total du panier chaque fois que le panier change
     const [total, setTotal] = useState(computeCartTotal(cartItems));
 
     useEffect(() => {
@@ -23,6 +22,8 @@ export default function DevCartPage() {
             className="py-36"
             wrapperClassName="flex flex-col lg:flex-row gap-24"
         >
+
+
             {/* Produits */}
             <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 flex-1">
                 {products.map((product) => (
@@ -41,15 +42,15 @@ export default function DevCartPage() {
                     />
                 ))}
             </section>
+            <CartCounter/>
             {/* /Produits */}
 
             {/* Panier */}
+
+
             <section className="w-full lg:w-1/3 space-y-8">
                 <h2 className="text-2xl font-bold">Panier</h2>
-
-                <CartCounter/>
                 <Cart/>
-
                 {/* Afficher le total du panier */}
                 <div className="flex justify-between items-center">
                     <span className="text-lg font-semibold">Total :</span>
