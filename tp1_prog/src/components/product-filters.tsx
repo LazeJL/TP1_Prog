@@ -1,36 +1,71 @@
 "use client";
 
-import { Button } from 'tp-kit/components';
-import { TextInput, Checkbox, Group } from '@mantine/core';
-import { useForm } from '@mantine/form';
-import { FormEventHandler, useMemo } from 'react';
+import { FC, memo, useCallback } from "react";
 import { ProductsCategoryData } from "tp-kit/types";
-import { ProductFilterResult } from '@/types';
+import { ProductFiltersResult } from "../types";
+import { useForm } from "@mantine/form";
+import { TextInput, Checkbox } from "@mantine/core";
+import { MagnifyingGlass } from "@phosphor-icons/react";
+import { Button } from "tp-kit/components";
 
-type Props = {categories: ProductsCategoryData[], onChange : (param : ProductFilterResult) => void}
+type Props = {
+  categories: ProductsCategoryData[];
+  onChange: (values: ProductFiltersResult) => void;
+};
 
-export function ProductFilters({categories, onChange} : Props) {
+const ProductFilters: FC<Props> = memo(function ({ categories, onChange }) {
+  /**
+   * Initializes the form with empty fields. Never let a field undefined to let react properly controls the inputs
+   */
+  const form = useForm<ProductFiltersResult>({
+    initialValues: {
+      search: "",
+      categoriesSlugs: [],
+    },
+  });
 
-    const form = useForm({
-        initialValues: {
-            categoriesSlug: [],
-            search: ""
-        }
-    })
+  /**
+   * Fired when form is submitted : send the form values to the parent component 
+   */
+  const handleSubmit = useCallback((values: ProductFiltersResult) => {
+    onChange({
+      categoriesSlugs: values.categoriesSlugs,
+      search: values.search || undefined
+    });
+  }, [onChange]);
 
-    function handleFilter(values : ProductFilterResult) {
-        onChange(values)
-    }
+  return (
+    <form onSubmit={form.onSubmit(handleSubmit)} className="space-y-8 mt-16">
+      {/* Search field */}
+      <TextInput
+        id="search-input"
+        placeholder="Rechercher une boisson"
+        icon={<MagnifyingGlass size={24} weight="duotone" className="text-brand" />}
+        {...form.getInputProps("search")}
+      />
 
-    return (
-        <main>
-            <form onSubmit={form.onSubmit((values) => handleFilter(values))}>
-                <TextInput className='mb-3' id="search" {...form.getInputProps("search")}></TextInput>
-                <Checkbox.Group className='flex flex-col gap-3' {...form.getInputProps("categoriesSlug")}>
-                    {categories.map((category,index) => <Checkbox key={index} value={category.slug} label={category.name}></Checkbox>)}
-                </Checkbox.Group>
-                <Button className='mt-5' type="submit">Filter</Button>
-            </form>
-        </main>
-    )
-}
+      {/* Categories checkbox list */}
+      <Checkbox.Group
+        className="space-y-2"
+        {...form.getInputProps("categoriesSlugs")}
+      >
+        {categories.map((cat) => (
+          <Checkbox
+            key={cat.id}
+            id={cat.id.toString()}
+            label={`${cat.name} (${cat.products.length})`}
+            value={cat.slug}
+          />
+        ))}
+      </Checkbox.Group>
+
+      {/* Submit button */}
+      <Button fullWidth type={"submit"}>
+        Filtrer
+      </Button>
+    </form>
+  );
+});
+
+ProductFilters.displayName = "ProductFilters";
+export { ProductFilters };

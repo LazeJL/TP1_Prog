@@ -1,13 +1,19 @@
-import { NextFont } from "next/dist/compiled/@next/font"
-import { ReactNode } from "react"
-import { MantineCustomThemeProvider } from "tp-kit/components"
+"use client";
 
-type Props = {font : NextFont, children : ReactNode}
+import { NextFont } from "next/dist/compiled/@next/font";
+import { FC, ReactNode, memo } from "react";
+import { MantineCustomThemeProvider } from "tp-kit/components";
 
-export default function Providers({font, children}: Props) {
-    return (
-        <MantineCustomThemeProvider font={font}>
-            {children}
-        </MantineCustomThemeProvider>
-    )
+type Props = {
+  children: ReactNode,
+  font: NextFont
 }
+
+const Providers: FC<Props> = memo(function({font, children}) {
+  return <MantineCustomThemeProvider font={font}>
+    {children}
+  </MantineCustomThemeProvider>;
+});
+
+Providers.displayName = "Providers";
+export {Providers};
