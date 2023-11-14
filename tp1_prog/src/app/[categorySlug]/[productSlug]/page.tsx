@@ -5,7 +5,7 @@ import { Metadata } from "next";
 import { ProductAttribute, ProductAttributesTable} from "../../../components/product-attributes-table";
 import prisma from "@/utils/prisma";
 import { cache } from "react";
-
+import createOrder from "@/action/create-orders";
 
 export const getProduct = cache(async (slugCat: string, slugProd: string) => {
   const product = await prisma.product.findUnique({
@@ -67,6 +67,16 @@ export default async function ProductPage({ params }: NextPageProps<Props>) {
     throw error;
   }
   
+  const handleOrderClick = async () => {
+    const result = await createOrder(lines);
+  
+    if (result.success) {
+      console.log(`Commande créée avec succès! ID de commande : ${result.orderId}`);
+    } else {
+      console.error('Erreur lors de la commande :', result.error);
+    }
+  };
+
   return (
     <SectionContainer wrapperClassName="max-w-5xl">
       <BreadCrumbs
@@ -136,7 +146,7 @@ export default async function ProductPage({ params }: NextPageProps<Props>) {
               <ProductCardLayout
                 product={product}
                 button={
-                  <Button variant="ghost" className="flex-1 !py-4">
+                  <Button variant="ghost" className="flex-1 !py-4" onClick={handleOrderClick}>
                     Ajouter au panier
                   </Button>
                 }
