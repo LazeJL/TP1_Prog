@@ -1,67 +1,69 @@
-import {Button, ProductCartLine} from "tp-kit/components";
-import {clearCart, computeCartTotal, removeLine, updateLine, useStore} from "../hooks/use-cart";
-import {useEffect, useState} from "react";
+"use client";
 
-export default function Cart() {
-    const lines = useStore((state) => state.lines);
-    const [total, setTotal] = useState(computeCartTotal(lines));
+import { FC, memo, useCallback } from "react";
+import { ProductCartLine, FormattedPrice, Button } from "tp-kit/components";
+import {
+  removeLine,
+  updateLine,
+  computeCartTotal,
+  useCart,
+  clearCart,
+} from "../hooks/use-cart";
+import { createOrder } from "../actions/create-order";
 
-    useEffect(() => {
-        setTotal(computeCartTotal(lines));
-    }, [lines]);
+type Props = {};
 
+const Cart: FC<Props> = memo(function () {
+  const lines = useCart((cart) => cart.lines);
+  const wrapperClasses = "bg-white rounded-lg p-6 shadow-xl space-y-12";
+
+  const handleCreateOrder = useCallback(async () => {
+    await createOrder(useCart.getState());
+    clearCart();
+  }, []);
+
+  if (lines.length === 0)
     return (
-        <div
-            className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white p-8 flex justify-between flex-col"
-        >
-            <p
-                className="text-2xl mb-4"
-            >
-                MON PANIER
-            </p>
-            {
-                lines.map((line) => (
-                    <ProductCartLine
-                        className={"mb-4"}
-                        key={line.product.id}
-                        product={line.product}
-                        qty={line.qty}
-                        onDelete={() => {
-                            removeLine(line.product.id);
-                        }}
-                        onQtyChange={(qty) => {
-                            if (qty === 0) {
-                                removeLine(line.product.id);
-                            } else {
-                                updateLine({product: line.product, qty: qty});
-                            }
-                        }}
-                    />
-                ))
-            }
-            <div
-                className="flex justify-between items-center mt-4"
-            >
-                <p>Total</p>
-                <p>{total.toFixed(2).toString().replace('.', ',') + " €"}</p>
-            </div>
-            <Button
-                className="mt-8"
-                fullWidth
-                variant={"primary"}
-            >
-                Commander
-            </Button>
-            <Button
-                className="mt-2"
-                fullWidth
-                variant={"outline"}
-                onClick={() => {
-                    clearCart();
-                }}
-            >
-                Vider le panier
-            </Button>
-        </div>
-    )
-}
+      <div className={wrapperClasses}>
+        <p className="my-12 text-center text-gray-600 text-sm">
+          Votre panier est vide
+        </p>
+      </div>
+    );
+
+  return (
+    <div className={wrapperClasses}>
+      <h2 className="text-sm uppercase font-bold tracking-wide">Mon panier</h2>
+
+      <div className="space-y-4">
+        {lines.map(({ product, qty }) => (
+          <ProductCartLine
+            key={product.id}
+            product={product}
+            qty={qty}
+            onDelete={() => removeLine(product.id)}
+            onQtyChange={(qty) => updateLine({ product, qty })}
+          />
+        ))}
+      </div>
+
+      <table className="w-full">
+        <tbody>
+          <tr>
+            <th className="text-left">Total</th>
+            <td className="text-right font-bold">
+              <FormattedPrice price={computeCartTotal(lines)} />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <Button fullWidth size="lg" onClick={handleCreateOrder}>
+        Commander
+      </Button>
+    </div>
+  );
+});
+
+Cart.displayName = "Cart";
+export { Cart };
