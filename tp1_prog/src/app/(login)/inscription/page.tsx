@@ -5,8 +5,8 @@ import {z} from 'zod';
 import {useForm, zodResolver} from '@mantine/form';
 import {PasswordInput, TextInput, Box, Group} from '@mantine/core';
 import React, {useState} from "react";
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 const schema = z.object({
     name: z.string().min(2, {message: 'Le nom ne doit pas être vide'}),
@@ -20,6 +20,7 @@ const Inscription = () => {
     const [password, setPassword] = useState('')
     const router = useRouter()
     const supabase = createClientComponentClient()
+    
     function addError() {
         setNotices(n => [...n, {type: "error", message: "Erreur d'inscription"}]);
     }

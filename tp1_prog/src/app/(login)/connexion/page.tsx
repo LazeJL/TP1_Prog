@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { TextInput, PasswordInput, Box } from '@mantine/core';
 import {Button, NoticeMessage, NoticeMessageData} from 'tp-kit/components';
 import {useRouter} from "next/navigation";
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
  
 const schema = z.object({
     email: z.string().email({ message: 'L\'email doit être au format valide' }),
