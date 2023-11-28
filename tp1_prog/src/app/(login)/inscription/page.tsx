@@ -1,36 +1,72 @@
-"use client"
-import { useForm } from '@mantine/form';
-import { TextInput, Button, Box, PasswordInput } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
+'use client';
 
-export default function inscription() {
-  const form = useForm({
-    initialValues: { name: '', email: '', password: ''},
-    validate: {
-      name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-      password: (value) => (value.length >= 6 ? null : 'Password must be at least 6 characters'),
-      
-    },
-  });
+import {useForm} from "@mantine/form";
+import {Card, PasswordInput, TextInput} from "@mantine/core";
+import {Button} from "tp-kit/components";
+import {useRouter} from "next/navigation";
 
-  const handleError = (errors: typeof form.errors) => {
-    if (errors.name) {
-      notifications.show({ message: 'Please fill name field', color: 'red' });
-    } else if (errors.email) {
-      notifications.show({ message: 'Please provide a valid email', color: 'red' });
+export default function Inscription(){
+    const form = useForm({
+        initialValues: {
+            nom: '',
+            email: '',
+            password: '',
+        },
+
+        validate: {
+            email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+        },
+    });
+
+    const router = useRouter();
+
+    const handleSubmit = (values) => {
+        console.log(values);
     }
-  };
 
-  return (
-    <Box maw={340} mx="auto">
-      <form onSubmit={form.onSubmit(console.log, handleError)}>
-        <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-        <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
-        <PasswordInput label="Password" placeholder="Password" {...form.getInputProps('password')}/>
-        <Button type="submit" mt="sm"> Submit </Button>
-      </form>
-    </Box>
-  );
+    return (
+      <Card maw={340} mx="auto">
+        <form
+            className="flex items-center flex-col space-y-6 w-"
+            onSubmit={form.onSubmit((values) => handleSubmit(values))}
+        >
+            <p
+                className="text-left w-full"
+            >
+                Inscription
+            </p>
+
+            <TextInput
+                className="w-full"
+                required
+                label="Nom"
+                description="Le nom qui sera utilisé pour vos commandes"
+                {...form.getInputProps('nom')}
+            />
+
+            <TextInput
+                className="w-full"
+                required
+                label="Adresse email"
+                {...form.getInputProps('email')}
+            />
+
+            <PasswordInput
+                className="w-full"
+                required
+                label="Mot de passe"
+                {...form.getInputProps('password')}
+            />
+
+            <Button
+                className="w-full"
+                type="submit"
+            >
+                S'inscrire
+            </Button>
+
+            <a onClick={() => router.push('/connexion')} className="">Déjà un compte ? Se connecter</a>
+        </form>
+        </Card>
+    );
 }
-
