@@ -1,72 +1,98 @@
-'use client';
+"use client";
+import {PRODUCTS_CATEGORY_DATA} from "tp-kit/data";
+import {Button, NoticeMessage, NoticeMessageData, SectionContainer} from "tp-kit/components";
+import {z} from 'zod';
+import {useForm, zodResolver} from '@mantine/form';
+import {PasswordInput, TextInput, Box, Group} from '@mantine/core';
+import React, {useState} from "react";
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/navigation';
 
-import {useForm} from "@mantine/form";
-import {Card, PasswordInput, TextInput} from "@mantine/core";
-import {Button} from "tp-kit/components";
-import {useRouter} from "next/navigation";
+const schema = z.object({
+    name: z.string().min(2, {message: 'Le nom ne doit pas être vide'}),
+    email: z.string().email({message: 'Format invalide'}),
+    password: z.string().min(6, {message: 'Le mot de passe doit contenir au moins 6 caractères'}),
+});
 
-export default function Inscription(){
+const Inscription = () => {
+    const [notices, setNotices] = useState<NoticeMessageData[]>([]);
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const router = useRouter()
+    const supabase = createClientComponentClient()
+    function addError() {
+        setNotices(n => [...n, {type: "error", message: "Erreur d'inscription"}]);
+    }
+    function addSuccess() {
+        setNotices(n => [...n, {type: "success", message: "Inscription réussi"}]);
+    }
+    function removeNotice(index) {
+        setNotices(n => {
+            delete (n[index]);
+            return Object.values(n);
+        });
+    }
     const form = useForm({
+        validate: zodResolver(schema),
         initialValues: {
-            nom: '',
+            name: '',
             email: '',
             password: '',
         },
-
-        validate: {
-            email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-        },
     });
-
-    const router = useRouter();
-
-    const handleSubmit = (values) => {
-        console.log(values);
+    const handleSignUp = async () => {
+        await supabase.auth.signUp({
+            email: form.values.email,
+            password : form.values.password,
+            options: {
+                emailRedirectTo: `${location.origin}/auth/callback`,
+            },
+        })
+        //router.refresh()
     }
-
     return (
-      <Card maw={340} mx="auto">
-        <form
-            className="flex items-center flex-col space-y-6 w-"
-            onSubmit={form.onSubmit((values) => handleSubmit(values))}
-        >
-            <p
-                className="text-left w-full"
-            >
-                Inscription
-            </p>
-
-            <TextInput
-                className="w-full"
-                required
-                label="Nom"
-                description="Le nom qui sera utilisé pour vos commandes"
-                {...form.getInputProps('nom')}
-            />
-
-            <TextInput
-                className="w-full"
-                required
-                label="Adresse email"
-                {...form.getInputProps('email')}
-            />
-
-            <PasswordInput
-                className="w-full"
-                required
-                label="Mot de passe"
-                {...form.getInputProps('password')}
-            />
-
-            <Button
-                className="w-full"
-                type="submit"
-            >
-                S'inscrire
-            </Button>
-
-            <a onClick={() => router.push('/connexion')} className="">Déjà un compte ? Se connecter</a>
-        </form>
-        </Card>
+            <Box maw={340} mx="auto">
+                <ul>
+                    {notices.map((notice, i) => <NoticeMessage
+                        key={i}
+                        {...notice}
+                        onDismiss={() => removeNotice(i)}
+                    />)}
+                </ul>
+                <form  onSubmit={form.onSubmit(handleSignUp)} className="space-y-8 mt-16">
+                    <TextInput
+                        withAsterisk
+                        label="Name"
+                        description="Le nom qui sera utilisé pour vos commandes"
+                        placeholder="Michel"
+                        mt="sm"
+                        {...form.getInputProps('name')}
+                    />
+                    <TextInput
+                        withAsterisk
+                        label="Email"
+                        placeholder="example@mail.com"
+                        {...form.getInputProps('email')}
+                    />
+                    <PasswordInput
+                        withAsterisk
+                        label="Password"
+                        placeholder={"Ke$$a..."}
+                        {...form.getInputProps('password')}
+                    />
+                    <div>
+                        <Button type="submit" fullWidth onClick={addError}>
+                            S'inscrire
+                        </Button>
+                        <Button variant={"outline"} fullWidth variant="ghost"
+                                onClick={() => {
+                                    window.location.href = "/connexion"
+                                }}>
+                            Déjà un compte ? Se connecter
+                        </Button>
+                    </div>
+                </form>
+            </Box>
     );
 }
+export default Inscription;
