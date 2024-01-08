@@ -6,6 +6,7 @@ import {createClientComponentClient} from "@supabase/auth-helpers-nextjs";
 import { Session } from "@supabase/gotrue-js/src/lib/types"
 import {Button} from "tp-kit/components";
 import {useRouter} from "next/navigation";
+import { Box } from "@mantine/core";
  
 export default function Page() {
   const router = useRouter();
@@ -23,24 +24,13 @@ export default function Page() {
   }, []);
  
   return (
-      <div
-        className="flex flex-col justify-center space-y-6"
-      >
-        <p
-          className="text-2xl font-bold"
-        >
-          MON COMPTE
-        </p>
-        <p>
-          Bonjour, {user?.user.user_metadata.name} !
-        </p>
+    <Box maw={340} mx="auto">
+      <div className="flex flex-col justify-center space-y-6">
+        <p className="text-2xl font-bold" > MON COMPTE </p>
+        <p> Bonjour, {user?.user.user_metadata.name} ! </p>
         <div>
-          <p>
-            Nom : {user?.user.user_metadata.name}
-          </p>
-          <p>
-            Email : {user?.user.email}
-          </p>
+          <p> Nom : {user?.user.user_metadata.name} </p>
+          <p> Email : {user?.user.email} </p>
         </div>
         <Button
             onClick={() => {
@@ -48,10 +38,8 @@ export default function Page() {
                 router.refresh()
               })
             }}
-            variant="outline"
-        >
-            Se déconnecter
-        </Button>
+            variant="outline" > Se déconnecter </Button>
       </div>
+    </Box>
   )
 }

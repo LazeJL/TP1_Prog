@@ -1,8 +1,8 @@
 'use client';
  
 import {z} from "zod";
-import { zodResolver} from "@mantine/form";
-import {PasswordInput, TextInput} from "@mantine/core";
+import { useForm, zodResolver} from "@mantine/form";
+import {Box, PasswordInput, TextInput} from "@mantine/core";
 import {Button, NoticeMessage, useZodI18n} from "tp-kit/components";
 import {useRouter} from "next/navigation";
 import React, {useEffect, useState} from "react";
@@ -66,6 +66,7 @@ export default function Inscription(){
     }
  
     return (
+        <Box maw={340} mx="auto">
             <form className="flex items-center flex-col space-y-6 w-" onSubmit={form.onSubmit((values) => handleSubmit(values))}>
 
                 <p className="text-left w-full text-2xl"> Inscription </p>
@@ -109,5 +110,6 @@ export default function Inscription(){
 
                 </div>
             </form>
+        </Box>
     );
 }

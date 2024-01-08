@@ -2,7 +2,7 @@
  
 import { z } from 'zod';
 import {useForm, zodResolver} from "@mantine/form";
-import {PasswordInput, TextInput} from "@mantine/core";
+import {Box, PasswordInput, TextInput} from "@mantine/core";
 import React, {useEffect, useState} from "react";
 import {Button, NoticeMessage, useZodI18n} from "tp-kit/components";
 import {useRouter} from "next/navigation";
@@ -62,6 +62,7 @@ export default function Connexion(){
     }
  
     return (
+        <Box maw={340} mx="auto">
         <form
             className="flex items-center flex-col space-y-6 w-"
             onSubmit={form.onSubmit((values) => handleSubmit(values))}
@@ -103,5 +104,6 @@ export default function Connexion(){
  
             <a onClick={() => router.push('/inscription')} className="">Créer un compte</a>
         </form>
+        </Box>
     );
 }
