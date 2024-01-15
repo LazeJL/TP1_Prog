@@ -1,7 +1,7 @@
 "use client";
 
-import { FC, memo, useCallback } from "react";
-import { ProductCartLine, FormattedPrice, Button } from "tp-kit/components";
+import { FC, memo, useCallback, useState } from "react";
+import { ProductCartLine, FormattedPrice, Button, NoticeMessage } from "tp-kit/components";
 import {
   removeLine,
   updateLine,
@@ -16,15 +16,21 @@ type Props = {};
 const Cart: FC<Props> = memo(function () {
   const lines = useCart((cart) => cart.lines);
   const wrapperClasses = "bg-white rounded-lg p-6 shadow-xl space-y-12";
-
+  const [messageToDisplay,setMessageToDisplay] = useState(null) as any
   const handleCreateOrder = useCallback(async () => {
-    await createOrder(useCart.getState());
-    clearCart();
+    const {error, success } = await createOrder(useCart.getState());
+    if(error)
+    setMessageToDisplay(<NoticeMessage type={"error"} onDismiss={() => setMessageToDisplay(null)} message={error}/>)
+    else{
+      setMessageToDisplay(<NoticeMessage type={"success"} onDismiss={() => setMessageToDisplay(null)} message={"Votre commande a bien été prise en compte"}/>)
+      clearCart();
+    }
   }, []);
 
   if (lines.length === 0)
     return (
       <div className={wrapperClasses}>
+        {messageToDisplay}
         <p className="my-12 text-center text-gray-600 text-sm">
           Votre panier est vide
         </p>
@@ -34,7 +40,7 @@ const Cart: FC<Props> = memo(function () {
   return (
     <div className={wrapperClasses}>
       <h2 className="text-sm uppercase font-bold tracking-wide">Mon panier</h2>
-
+      {messageToDisplay}
       <div className="space-y-4">
         {lines.map(({ product, qty }) => (
           <ProductCartLine

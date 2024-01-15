@@ -25,7 +25,7 @@ const ProductFilters: FC<Props> = memo(function ({ categories, onChange }) {
   });
 
   /**
-   * Fired when form is submitted : send the form values to the parent component 
+   * Fired when form is submitted : send the form values to the parent component
    */
   const handleSubmit = useCallback((values: ProductFiltersResult) => {
     onChange({

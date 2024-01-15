@@ -1,109 +1,47 @@
-'use client';
- 
-import { z } from 'zod';
-import {useForm, zodResolver} from "@mantine/form";
-import {Box, PasswordInput, TextInput} from "@mantine/core";
-import React, {useEffect, useState} from "react";
-import {Button, NoticeMessage, useZodI18n} from "tp-kit/components";
-import {useRouter} from "next/navigation";
-import {createClientComponentClient} from "@supabase/auth-helpers-nextjs";
-import { getUser } from '../../../utils/supabase';
+"use client"
+import { z } from "zod"
+import { TextInput, PasswordInput } from '@mantine/core';
+import { useForm, zodResolver } from '@mantine/form';
+import Link from 'next/link';
+import { Button, useZodI18n } from 'tp-kit/components';
+import Layout from '../layout';
+import { useCallback } from "react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/navigation";
 
-const schema = z.object({
-    email: z.string().email().nonempty(),
-    password: z.string().min(6)
-});
- 
-type FormValues = z.infer<typeof schema>;
- 
-export default function Connexion(){
-    useZodI18n(z);
-    const form = useForm<FormValues>({
+export default function Page() {
+    const router = useRouter()
+    const supabase = createClientComponentClient()
+    const schema = z.object({
+        email: z.string().email(),
+        password: z.string().min(6)
+    })
+    useZodI18n(z)
+    const form = useForm({
         initialValues: {
-            email: '',
-            password: '',
+            email: "",
+            password: ""
         },
- 
-        validate: zodResolver(schema),
-    });
- 
-    const supabase = createClientComponentClient();
- 
-    const [created, setCreated] = useState(false);
-    const [isValid, setIsValid] = useState(false);
-    const [message, setMessage] = useState("");
- 
-    const router = useRouter();
- 
-    useEffect(() => {
-        getUser(supabase).then((user) => {
-            if (user.session) {
-                router.push('/mon-compte')
-            }
-        });
-    }, []);
- 
-    const handleSubmit = async (values: FormValues) => {
-        const { error } = await supabase.auth.signInWithPassword(
-            {
-                email: values.email,
-                password: values.password,
-            }
-        )
- 
-        if (!error) {
-            router.push('/')
-        }
- 
-        console.log(error)
-        setCreated(true);
-        setMessage((error) ? error.message : "Vous êtes connecté")
-        setIsValid((!error))
-    }
- 
-    return (
-        <Box maw={340} mx="auto">
-        <form
-            className="flex items-center flex-col space-y-6 w-"
-            onSubmit={form.onSubmit((values) => handleSubmit(values))}
-        >
-            <p
-                className="text-left w-full text-2xl"
-            >
-                Connexion
-            </p>
- 
-            {
-                created &&
-                <NoticeMessage
-                    type={isValid ? "success" : "error"}
-                    message={message}
-                />
-            }
- 
-            <TextInput
-                className="w-full"
-                required
-                label="Adresse email"
-                {...form.getInputProps('email')}
-            />
- 
-            <PasswordInput
-                className="w-full"
-                required
-                label="Mot de passe"
-                {...form.getInputProps('password')}
-            />
- 
-            <Button
-                className="w-full cursor-pointer"
-                type="submit"
-            >
-                Se connecter
-            </Button>
- 
-            <a onClick={() => router.push('/inscription')} className="">Créer un compte</a>
-        </form>
-        </Box>
-    );
+        validate: zodResolver(schema)
+    })
+
+    const handleSignin = (async (values: typeof form.values) => {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: values.email,
+            password: values.password
+        })
+        console.log(error);
+        
+        router.refresh()
+    })
+
+    return <div> 
+        <h1>Connection</h1>
+        <form onSubmit={form.onSubmit(handleSignin)}>
+            <TextInput label="Adresse email" withAsterisk placeholder='lin.guini@barilla.it' required {...form.getInputProps("email")}/>
+            <PasswordInput label="Mot de passe" withAsterisk placeholder='Entrez votre mot de passe' required {...form.getInputProps("password")}/>
+            <Button fullWidth type={"submit"}>Se connecter</Button>
+            <Link href={"/inscription"}>Créer un compte</Link>
+        </form> 
+    </div>
 }

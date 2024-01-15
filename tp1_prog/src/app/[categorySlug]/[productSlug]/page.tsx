@@ -1,3 +1,4 @@
+
 import {
   BreadCrumbs,
   Button,
@@ -17,7 +18,7 @@ import {
 import { AddToCartButton } from "../../../components/add-to-cart-button";
 import { cache } from "react";
 import prisma from "../../../utils/prisma";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 
 const getProduct = cache((slug: string) => prisma.product.findUnique({
   where: {slug},
@@ -60,7 +61,22 @@ const productAttributes: ProductAttribute[] = [
   { label: "Instagramabilité", rating: 5 },
 ];
 
+export async function generateStaticParams(): Promise<Props[]> { //en fait on utilise ça pour en quelque sorte "précharger" les pages pour que ça soit plus rapide, dans ce cas là on prends tout les produits et catégories en bdd et on en fait un giga tableau et quand on npm build ça va précharger
+  const products = await prisma.product.findMany({
+    include: {
+      category: true
+    }
+  })
+  console.log(products);
+  
+  return products.map((product) => ({
+    categorySlug: product.category.slug,
+    productSlug: product.slug
+  }))
+}
+
 export default async function ProductPage({ params }: NextPageProps<Props>) {
+  console.log(params);
   const product = await getProduct(params.productSlug);
   if (!product) notFound();
 

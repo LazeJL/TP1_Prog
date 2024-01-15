@@ -1,16 +1,24 @@
 "use client";
 
-import { FC, memo, Fragment } from "react";
+import { FC, memo, Fragment, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { MenuBar, Button } from "tp-kit/components";
 import { ShoppingBag, X, User } from "@phosphor-icons/react";
 import { Cart } from "./cart";
 import { CartCounter } from "./cart-counter";
 import Link from "next/link";
+import { getUser } from "../utils/supabase";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 type Props = {};
 
 const Menu: FC<Props> = memo(function () {
+  const supabase = createClientComponentClient()
+  const [userIsNotConnected, setUserIsNotConnected] = useState(false)
+  getUser(supabase).then((data) => setUserIsNotConnected(!data))
+  supabase.auth.onAuthStateChange((event, session) => {
+    console.log(event, session)
+  })
   return (
     <MenuBar
     trailing={
@@ -24,7 +32,7 @@ const Menu: FC<Props> = memo(function () {
           <Popover as="div" className="flex justify-end">
             {({ open }) => (
               <>
-                <Popover.Button as={Button} variant={"ghost"} className={"!rounded-full h-[44px] w-[44px] !p-0 flex justify-center items-center aspect-square relative text-3xl"}>
+                {!userIsNotConnected && <Popover.Button as={Button} variant={"ghost"} className={"!rounded-full h-[44px] w-[44px] !p-0 flex justify-center items-center aspect-square relative text-3xl"}>
                   {open 
                     ? <X size={18} weight="regular" />
                     : <ShoppingBag size={24} weight="regular" />}
@@ -32,7 +40,7 @@ const Menu: FC<Props> = memo(function () {
                   <div className="aspect-square bg-brand text-white text-center text-xs absolute -right-1 -top-1 rounded-full flex items-center justify-center h-[20px] w-[20px]">
                     <div><CartCounter /></div>
                   </div>
-                </Popover.Button>
+                </Popover.Button>}
 
                 <Transition
                   as={Fragment}

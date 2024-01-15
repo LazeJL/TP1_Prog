@@ -16,7 +16,7 @@ export async function GET(request:NextRequest) {
           name: {
             contains: params.search,
             // Ignore the case
-            mode: "insensitive" 
+            mode: "insensitive"
           },
         },
       } : true

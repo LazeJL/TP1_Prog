@@ -19,7 +19,7 @@ const OrderTable: FC<Props> = memo(function ({ orders }) {
     [router],
   );
 
-  return <OrderTableLayout orders={orders} onRowClick={handleRowClic} />;
+  return <OrderTableLayout orders={orders} onRowClick={handleRowClic as unknown as any} />;
 });
 
 OrderTable.displayName = "OrderTable";
