@@ -12,6 +12,8 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 type Props = {};
 
+
+
 const Menu: FC<Props> = memo(function () {
   const supabase = createClientComponentClient()
   const [userIsNotConnected, setUserIsNotConnected] = useState(false)
