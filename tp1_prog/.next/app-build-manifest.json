@@ -1,14 +1,10 @@
 {
   "pages": {
-    "/mon-compte/page": [
+    "/[categorySlug]/[productSlug]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/mon-compte/page.js"
-    ],
-    "/mon-compte/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/mon-compte/layout.js"
+      "static/css/app/[categorySlug]/[productSlug]/page.css",
+      "static/chunks/app/[categorySlug]/[productSlug]/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -21,11 +17,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
-    "/[categorySlug]/[productSlug]/page": [
+    "/mon-compte/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/[categorySlug]/[productSlug]/page.css",
-      "static/chunks/app/[categorySlug]/[productSlug]/page.js"
+      "static/chunks/app/mon-compte/page.js"
+    ],
+    "/mon-compte/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/mon-compte/layout.js"
     ]
   }
 }

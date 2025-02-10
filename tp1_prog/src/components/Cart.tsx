@@ -1,25 +1,40 @@
 "use client";
+import { createOrder } from "@/action/create-order";
 import {
   updateLine,
   removeLine,
   useCart,
-  computeCartTotal
+  computeCartTotal,
+  clearCart
 } from "@/hooks/use-cart";
+import { NoticeMessage } from "@arthur.eudeline/starbucks-tp-kit";
 import { Button } from "@arthur.eudeline/starbucks-tp-kit/components/button";
 import { Card } from "@arthur.eudeline/starbucks-tp-kit/components/card";
 import { FormattedPrice } from "@arthur.eudeline/starbucks-tp-kit/components/data-display/formatted-price";
 import { Heading } from "@arthur.eudeline/starbucks-tp-kit/components/heading";
 import { ProductCartLine } from "@arthur.eudeline/starbucks-tp-kit/components/products/product-cart-line";
+import { useCallback, useState } from "react";
 
 export function Cart() {
   // On récupère notre panier et on écoute sur tous ses champs
   const cart = useCart();
 
+  const [messageToDisplay,setMessageToDisplay] = useState(null) as any
+  const handleCreateOrder = useCallback(async () => {
+    const {error, success } = await createOrder(useCart.getState());
+    if(error)
+    setMessageToDisplay(<NoticeMessage type={"error"} onDismiss={() => setMessageToDisplay(null)} message={error}/>)
+    else{
+      setMessageToDisplay(<NoticeMessage type={"success"} onDismiss={() => setMessageToDisplay(null)} message={"Votre commande a bien été prise en compte"}/>)
+      clearCart();
+    }
+  }, []);
+
   return <Card className="space-y-8">
     {cart.count < 1
       ? <div className="py-12 text-center">Votre panier est vide</div>
       : <>
-          <Heading as={"h2"} className="text-sm" >Mon panier</Heading>
+          <Heading as={"h2"} className="text-sm" size={"lg"} >Mon panier</Heading>
 
           {/* Lines */}
           <div className="space-y-4">
@@ -42,7 +57,7 @@ export function Cart() {
           </div>
 
           {/* Bouton commander */}
-          <Button variant={"primary"} fullWidth>
+          <Button variant={"primary"} onClick={handleCreateOrder} fullWidth>
             Commander
           </Button>
         </>}

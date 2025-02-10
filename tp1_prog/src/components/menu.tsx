@@ -4,11 +4,12 @@ import { FC, Fragment, memo, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { MenuBar } from "@arthur.eudeline/starbucks-tp-kit/components/menu-bar";
 import { Button } from "@arthur.eudeline/starbucks-tp-kit/components/button";
-import { ShoppingBag, X } from "@phosphor-icons/react/dist/ssr";
-import { Cart } from "./cart";
+import { ShoppingBag, User, X } from "@phosphor-icons/react/dist/ssr";
 import { CartCounter } from "./cart-counter";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/utils/supabse";
+import Link from "next/link";
+import { Cart } from "./Cart";
 
 type Props = {};
 
@@ -23,6 +24,12 @@ const Menu: FC<Props> = memo(function () {
     <MenuBar
     trailing={
         <div className="flex flex-row items-center gap-4 justify-end">
+          <Link href="/mon-compte">
+            <Button variant="ghost" className="!rounded-full !p-0 h-[44px] w-[44px] flex justify-center items-center aspect-square relative text-3xl">
+              <User size="18" weight="bold" />
+            </Button>
+          </Link>
+          
           <Popover as="div" className="flex justify-end">
             {({ open }) => (
               <>

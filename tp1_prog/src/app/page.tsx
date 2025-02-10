@@ -5,7 +5,6 @@ import { SectionContainer } from "@arthur.eudeline/starbucks-tp-kit/components/s
 import { PRODUCTS_CATEGORY_DATA } from "@arthur.eudeline/starbucks-tp-kit/data";
 import { ProductGridWithFilters } from "@/components/product-grid-with-filters";
 import prisma from "@/utils/prisma";
-const categories = PRODUCTS_CATEGORY_DATA;
 
 export const metadata:Metadata = {
   title: `Page d’accueil - Starbucks`,
@@ -13,13 +12,13 @@ export const metadata:Metadata = {
 }
 
 export default async function Home() {
-  /*
+  
   const categories = await prisma.productCategory.findMany({
     include: {
       products: true
     }
   });
-  */
+  
   
   return (
     <main>
