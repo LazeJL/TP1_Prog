@@ -1,56 +1,61 @@
 "use client";
 
-import React, { FC, memo, Fragment } from "react";
+import { FC, Fragment, memo, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
-import { MenuBar, Button } from "tp-kit/components";
-import { ShoppingBag, X } from "@phosphor-icons/react";
-import {clearCart, removeLine, updateLine, useStore} from "../hooks/use-cart";
-import {ProductCartLine} from "tp-kit/components/products";
-import Cart from "./Cart";
-import CartCounter from "./CartCounter";
+import { MenuBar } from "@arthur.eudeline/starbucks-tp-kit/components/menu-bar";
+import { Button } from "@arthur.eudeline/starbucks-tp-kit/components/button";
+import { ShoppingBag, X } from "@phosphor-icons/react/dist/ssr";
+import { Cart } from "./cart";
+import { CartCounter } from "./cart-counter";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { getUser } from "@/utils/supabse";
 
 type Props = {};
 
 const Menu: FC<Props> = memo(function () {
-    console.log("rendu page");
-    const lines = useStore((state) => state.lines);
-
+  const supabase = createClientComponentClient()
+  const [userIsNotConnected, setUserIsNotConnected] = useState(false)
+  getUser(supabase).then((data) => setUserIsNotConnected(!data))
+  supabase.auth.onAuthStateChange((event, session) => {
+    console.log(event, session)
+  })
   return (
     <MenuBar
-      trailing={
-        <Popover as="div" className="flex justify-end">
-          {({ open }) => (
-            <>
-              <Popover.Button as={Button} variant={"ghost"} className={"!rounded-full !p-0 flex justify-center items-center aspect-square relative text-3xl"}>
-                {open 
-                  ? <X size={18} weight="regular" />
-                  : <ShoppingBag size={24} weight="regular" />}
+    trailing={
+        <div className="flex flex-row items-center gap-4 justify-end">
+          <Popover as="div" className="flex justify-end">
+            {({ open }) => (
+              <>
+                <Popover.Button as={Button} variant={"ghost"} className={"!rounded-full h-[44px] w-[44px] !p-0 flex justify-center items-center aspect-square relative text-3xl"}>
+                  {open 
+                    ? <X size={18} weight="regular" />
+                    : <ShoppingBag size={24} weight="regular" />}
 
-                <CartCounter/>
-              </Popover.Button>
+                  <div className="aspect-square bg-brand text-white text-center text-xs absolute -right-1 -top-1 rounded-full flex items-center justify-center h-[20px] w-[20px]">
+                    <div><CartCounter /></div>
+                  </div>
+                </Popover.Button>
 
-
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-200"
-                enterFrom="opacity-0 translate-y-1"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition ease-in duration-150"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-1"
-              >
-                <Popover.Panel className="absolute left-0 sm:left-auto right-0 top-full z-10 mt-6 sm:w-full sm:max-w-sm">
-                  <Cart/>
-
-                </Popover.Panel>
-              </Transition>
-            </>
-          )}
-        </Popover>
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-200"
+                  enterFrom="opacity-0 translate-y-1"
+                  enterTo="opacity-100 translate-y-0"
+                  leave="transition ease-in duration-150"
+                  leaveFrom="opacity-100 translate-y-0"
+                  leaveTo="opacity-0 translate-y-1"
+                >
+                  <Popover.Panel className="absolute left-0 sm:left-auto right-0 top-full z-10 mt-6 sm:w-full sm:max-w-sm">
+                    <Cart />
+                  </Popover.Panel>
+                </Transition>
+              </>
+            )}
+          </Popover>
+        </div>
       }
     />
   );
-
 });
 
 Menu.displayName = "Menu";

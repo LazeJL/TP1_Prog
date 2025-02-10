@@ -1,14 +1,11 @@
-import './globals.css'
-import type { Metadata } from 'next'
-import { Lexend } from 'next/font/google'
-import { Providers } from '../components/providers';
-import { Footer } from 'tp-kit/components/footer';
-import { Menu } from '../components/menu';
+import '@arthur.eudeline/starbucks-tp-kit/styles';
+import type { Metadata } from "next";
+import { Lexend as Font } from "next/font/google";
+import "./globals.css";
+import { Footer } from '@arthur.eudeline/starbucks-tp-kit/components/footer';
+import { Menu } from '@/components/menu';
 
-const font = Lexend({
-  subsets: ['latin'],
-  weight: ['400', '600']
-});
+const font = Font({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
@@ -21,22 +18,19 @@ export const metadata: Metadata = {
   }
 }
 
+
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="fr">
-      <body className={font.className}>
+    <html lang="fr" suppressHydrationWarning>
+      <body className={font.className} suppressHydrationWarning>
         <Menu />
-
-        <Providers font={font}>
-          {children}
-        </Providers>
-
+        {children}
         <Footer />
       </body>
     </html>
-  )
+  );
 }

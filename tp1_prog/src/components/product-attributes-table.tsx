@@ -1,5 +1,5 @@
-import { FC, memo } from "react";
-import { ProductRating } from "tp-kit/components";
+import { FC } from "react";
+import { ProductRating } from "@arthur.eudeline/starbucks-tp-kit/components/products/product-rating";
 import styles from './product-attributes-table.module.css';
 
 export type ProductAttribute = { label: string; rating: number };
@@ -9,7 +9,7 @@ type Props = {
   className?: string,
 };
 
-const ProductAttributesTable: FC<Props> = memo(function ({ data, className = ''}) {
+export const ProductAttributesTable: FC<Props> = function ({ data, className = ''}) {
   return (
     <table className={`${styles.table} ${className}`}>
       <tbody>
@@ -26,7 +26,4 @@ const ProductAttributesTable: FC<Props> = memo(function ({ data, className = ''}
       </tbody>
     </table>
   );
-});
-
-ProductAttributesTable.displayName = "ProductAttributesTable";
-export { ProductAttributesTable };
+};

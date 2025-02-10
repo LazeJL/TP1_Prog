@@ -1,22 +1,17 @@
-import type { Config } from 'tailwindcss'
-
-const {stGreen} = require('tp-kit/tailwind/colors');
-const {gray} = require('tailwindcss/colors');
+import { Config } from "tailwindcss"
 
 const config: Config = {
+  presets: [
+    require('@arthur.eudeline/starbucks-tp-kit/tailwind/preset')
+  ],
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-    './tp-kit/**/*.{js,ts,jsx,tsx}',
+    './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-		extend: {
+    extend: {
       colors: {
-        default: gray[800],
-        green: stGreen,
-        brand: stGreen,
         coffee : {
+					// Will be use for text-coffee for instance
           DEFAULT: "#463F3A",
           50: "#fcf9f4",
           100: "#e6e2de",
@@ -33,6 +28,9 @@ const config: Config = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 }
-export default config
+
+export default config;

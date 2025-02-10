@@ -1,44 +1,53 @@
-import {
-  BreadCrumbs,
-  Button,
-  FormattedPrice,
-  ProductCardLayout,
-  ProductGridLayout,
-  ProductRating,
-  ProductImage,
-  SectionContainer,
-} from "tp-kit/components";
-import { NextPageProps } from "../../../types";
-import { PRODUCTS_CATEGORY_DATA } from "tp-kit/data";
-import { Metadata } from "next";
+import { BreadCrumbs } from "@arthur.eudeline/starbucks-tp-kit/components/breadcrumbs";
+import { Button } from "@arthur.eudeline/starbucks-tp-kit/components/button";
+import { FormattedPrice } from "@arthur.eudeline/starbucks-tp-kit/components/data-display/formatted-price";
+import { ProductCardLayout } from "@arthur.eudeline/starbucks-tp-kit/components/products/product-card-layout";
+import { ProductGridLayout } from "@arthur.eudeline/starbucks-tp-kit/components/products/product-grid-layout";
+import { ProductRating } from "@arthur.eudeline/starbucks-tp-kit/components/products/product-rating";
+import { ProductImage } from "@arthur.eudeline/starbucks-tp-kit/components/products/product-image";
+import { SectionContainer } from "@arthur.eudeline/starbucks-tp-kit/components/section-container";
+import { NextPageProps } from "@/types";
 import {
   ProductAttribute,
   ProductAttributesTable,
-} from "../../../components/product-attributes-table";
-const product = {
-  ...PRODUCTS_CATEGORY_DATA[0].products[0],
-  category: {
-    ...PRODUCTS_CATEGORY_DATA[0],
-    products: PRODUCTS_CATEGORY_DATA[0].products.slice(1),
-  },
-};
+} from "@/components/product-attributes-table";
+import { cache } from "react";
+import { notFound } from "next/navigation";
+import { ProductData, ProductsCategoryData } from "@arthur.eudeline/starbucks-tp-kit/types";
+import { PRODUCTS_CATEGORY_DATA } from "@arthur.eudeline/starbucks-tp-kit/data";
+import { Metadata } from "next";
+import prisma from "../../../utils/prisma";
+import { AddToCartButton } from "@/components/add-to-cart-button";
+
+
+type Product = ProductData & {
+  /**
+   * Contient la catégorie pour permettre de lister les produits liés.
+   * Ces derniers excluent le produit actuel de la page
+   */
+  category: ProductsCategoryData
+}
+
+/**
+ * Trouve un produit à partir de sa catégorie et de son slug
+ */
+const getProduct = cache((slug: string) => prisma.product.findUnique({
+  where: {slug},
+  include: {
+    category: {
+      include: {
+        products: {
+          where: { slug: {not: slug}}
+        }
+      }
+    }
+  }
+}));
 
 type Props = {
   categorySlug: string;
   productSlug: string;
 };
-
-export async function generateMetadata({
-  params,
-  searchParams,
-}: NextPageProps<Props>): Promise<Metadata> {
-  return {
-    title: product.name,
-    description:
-      product.desc ??
-      `Succombez pour notre ${product.name} et commandez-le sur notre site !`,
-  };
-}
 
 const productAttributes: ProductAttribute[] = [
   { label: "Intensité", rating: 3 },
@@ -48,7 +57,26 @@ const productAttributes: ProductAttribute[] = [
   { label: "Instagramabilité", rating: 5 },
 ];
 
+export async function generateMetadata({
+  params,
+  searchParams,
+}: NextPageProps<Props>): Promise<Metadata> {
+  const product = await getProduct(params.productSlug);
+  if (!product) return {};
+
+  return {
+    title: product.name,
+    description:
+      product.desc ??
+      `Succombez pour notre ${product.name} et commandez-le sur notre site !`,
+  };
+}
+
 export default async function ProductPage({ params }: NextPageProps<Props>) {
+  console.log(params);
+  const product = await getProduct(params.productSlug);
+  if (!product) notFound();
+
   return (
     <SectionContainer wrapperClassName="max-w-5xl">
       <BreadCrumbs
@@ -97,7 +125,7 @@ export default async function ProductPage({ params }: NextPageProps<Props>) {
               <p className="!my-0 text-xl">
                 <FormattedPrice price={product.price} />
               </p>
-              <Button variant={"primary"}>Ajouter au panier</Button>
+              <AddToCartButton product={product}/>
             </div>
           </div>
 
