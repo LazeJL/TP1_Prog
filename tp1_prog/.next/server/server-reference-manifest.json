@@ -1,16 +1,14 @@
 {
   "node": {
-    "f359f18414a68ff31ebfd2a2926ba6a2a676de2d": {
+    "7027cd469f0bfefc6436464a56c9a437e9041ec0": {
       "workers": {
-        "app/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Caction%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!",
-        "app/mon-compte/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Caction%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!"
+        "app/[categorySlug]/[productSlug]/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Caction%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!"
       },
       "layer": {
-        "app/page": "action-browser",
-        "app/mon-compte/page": "action-browser"
+        "app/[categorySlug]/[productSlug]/page": "action-browser"
       }
     }
   },
   "edge": {},
-  "encryptionKey": "ghQJctjsVuegsNSK3BWIh3yJ1y2GprTMhOeJSnhB1F4="
+  "encryptionKey": "mCcxRDTWaUkDa9vOdt34BkKQo0POdTja5K/twmzDXf8="
 }
