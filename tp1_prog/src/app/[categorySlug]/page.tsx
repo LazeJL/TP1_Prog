@@ -1,22 +1,46 @@
-import { BreadCrumbs, SectionContainer } from "tp-kit/components";
-import { PRODUCTS_CATEGORY_DATA } from "tp-kit/data";
-import { ProductList } from "../../components/product-list";
-import { NextPageProps } from "../../types";
+import { BreadCrumbs } from "@arthur.eudeline/starbucks-tp-kit/components/breadcrumbs";
+import { SectionContainer } from "@arthur.eudeline/starbucks-tp-kit/components/section-container";
+import { ProductGrid } from "@/components/product-grid";
+import { NextPageProps } from "@/types";
+import { notFound } from "next/navigation";
+import { ProductsCategoryData } from "@arthur.eudeline/starbucks-tp-kit/types";
+import { cache } from "react";
 import { Metadata } from "next";
-const category = PRODUCTS_CATEGORY_DATA[0];
+
+import { PRODUCTS_CATEGORY_DATA } from "@arthur.eudeline/starbucks-tp-kit/data";
+import prisma from "@/prisma";
 
 type Props = {
   categorySlug: string;
 };
 
-export async function generateMetadata({ params, searchParams} : NextPageProps<Props>) : Promise<Metadata> {
+/**
+ * Récupère une catégorie produit à partir de son slug
+ */
+const getCategory = cache(async (slug: string) : Promise<ProductsCategoryData | null> => {
+  // return PRODUCTS_CATEGORY_DATA.find(cat => cat.slug === slug) ?? null;
+  return prisma.productCategory.findUnique({
+    where: { slug },
+    include: { 
+      products: true
+    }
+  })
+});
+
+export async function generateMetadata({ params } : NextPageProps<Props>) : Promise<Metadata | null > {
+  const category = await getCategory(params.categorySlug);
+  if (!category) return null;
+
   return {
     title: category.name,
     description: `Trouvez votre inspiration avec un vaste choix de boissons Starbucks parmi nos produits ${category.name}`
   }
 }
 
-export default function CategoryPage({params}: NextPageProps<Props>) {
+export default async function CategoryPage({params}: NextPageProps<Props>) {
+  const category = await getCategory(params.categorySlug);
+  if (!category) notFound();
+
   return <SectionContainer>
     <BreadCrumbs 
       items={[
@@ -31,6 +55,6 @@ export default function CategoryPage({params}: NextPageProps<Props>) {
       ]}
     />
 
-    <ProductList categories={[category]} />
+    <ProductGrid categories={[category]} />
   </SectionContainer>
 }

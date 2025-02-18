@@ -1,30 +1,65 @@
 {
-  "name": "tp1_prog",
-  "version": "0.1.0",
+  "name": "@arthur.eudeline/starbucks-tp",
+  "version": "2.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "predev": "docker compose up -d",
+    "docker:update": "docker compose down storybook && docker rmi arthureudeline/starbucks-tp-kit-storybook && docker compose up storybook -d",
+    "build": "next build --no-lint",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "unlock:src": "chmod -R +w src/*",
+    "switch:tp-1": "pnpm run unlock:tp-1 && rm -rf src && cp -R tp-1/src src && pnpm run lock:tp-1",
+    "switch:tp-2": "pnpm run unlock:tp-2 && rm -rf src && cp -R tp-2/src src && pnpm run lock:tp-2",
+    "switch:tp-3": "pnpm run unlock:tp-3 && rm -rf src && cp -R tp-3/src src && pnpm run lock:tp-3",
+    "switch:tp-4": "pnpm run unlock:tp-4 && rm -rf src && cp -R tp-4/src src && pnpm run lock:tp-4",
+    "lock:tp-1": "chmod -R -w tp-1",
+    "lock:tp-2": "chmod -R -w tp-2",
+    "lock:tp-3": "chmod -R -w tp-3",
+    "lock:tp-4": "chmod -R -w tp-4",
+    "unlock:tp-1": "chmod -R +w tp-1",
+    "unlock:tp-2": "chmod -R +w tp-2",
+    "unlock:tp-3": "chmod -R +w tp-3",
+    "unlock:tp-4": "chmod -R +w tp-4",
+    "pack:tp-1": "pnpm run unlock:tp-1 && (cd tp-1 && zip -r - .) > zips/starbucks-tp-1.zip && pnpm run lock:tp-1",
+    "pack:tp-2": "pnpm run unlock:tp-2 && (cd tp-2 && zip -r - .) > zips/starbucks-tp-2.zip && pnpm run lock:tp-2",
+    "pack:tp-3": "pnpm run unlock:tp-3 && (cd tp-3 && zip -r - .) > zips/starbucks-tp-3.zip && pnpm run lock:tp-3",
+    "pack:tp-4": "pnpm run unlock:tp-4 && (cd tp-4 && zip -r - .) > zips/starbucks-tp-4.zip && pnpm run lock:tp-4"
   },
   "dependencies": {
-    "@tailwindcss/typography": "^0.5.10",
-    "@types/node": "20.6.3",
-    "@types/react": "18.2.22",
-    "@types/react-dom": "18.2.7",
-    "autoprefixer": "10.4.15",
-    "eslint": "8.49.0",
-    "eslint-config-next": "13.5.1",
-    "next": "13.5.1",
-    "postcss": "8.4.30",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "tailwindcss": "3.3.3",
-    "typescript": "5.2.2",
-    "zustand": "^4.4.4"
+    "@arthur.eudeline/starbucks-tp-kit": "*",
+    "@headlessui/react": "^1.7.16",
+    "@mantine/form": "^7.17.0",
+    "@phosphor-icons/react": "^2.0.10",
+    "@prisma/client": "^5.18",
+    "autoprefixer": "^10",
+    "bcryptjs": "^3.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "^14",
+    "next": "^14",
+    "next-auth": "^5.0.0-beta.25",
+    "pg": "^8.12.0",
+    "postcss": "^8",
+    "react": "^18",
+    "react-dom": "^18",
+    "tailwindcss": "^3",
+    "typescript": "^5",
+    "zod": "^3.24.2",
+    "zustand": "^4.5.4"
   },
-  "workspaces": [
-    "tp-kit"
-  ]
+  "devDependencies": {
+    "@types/node": "*",
+    "@types/pg": "^8.11.6",
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "prettier": "latest",
+    "prettier-plugin-tailwindcss": "latest",
+    "prisma": "^5.18",
+    "ts-node": "^10",
+    "tsx": "^4.17.0"
+  },
+  "prisma": {
+    "seed": "tsx ./prisma/seed.ts"
+  }
 }

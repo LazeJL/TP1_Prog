@@ -1,23 +1,37 @@
-import { BreadCrumbs, SectionContainer } from "tp-kit/components";
-import { PRODUCTS_CATEGORY_DATA } from "tp-kit/data";
-import { ProductList } from "../components/product-list";
 import { Metadata } from "next";
-const categories = PRODUCTS_CATEGORY_DATA;
+import { BreadCrumbs } from "@arthur.eudeline/starbucks-tp-kit/components/breadcrumbs";
+import { SectionContainer } from "@arthur.eudeline/starbucks-tp-kit/components/section-container";
+// Data
+import { ProductGridWithFilters } from "@/components/product-grid-with-filters";
+import prisma from "@/prisma";
+
 
 export const metadata:Metadata = {
   title: `Page d’accueil - Starbucks`,
   description: "Commandez de délicieuses boissons préparées avec soin par nos baristas"
 }
 
-export default function Home() {
-  return (<SectionContainer>
-    <BreadCrumbs items={[
-      {
-        label: "Accueil",
-        url: "/"
-      }
-    ]} />
+export default async function Home() {
+  const categories = await prisma.productCategory.findMany({
+    include: {
+      products: true
+    }
+  });
 
-    <ProductList categories={categories} showFilters />
-  </SectionContainer>);
+  return (
+    <main>
+      <SectionContainer>
+        {/* Fil d'arianne */}
+        <BreadCrumbs items={[
+          {
+            label: "Accueil",
+            url: ""
+          }
+        ]} />
+
+        {/* Grille Produit */}
+        <ProductGridWithFilters categories={categories} />
+      </SectionContainer>
+    </main>
+  );
 }

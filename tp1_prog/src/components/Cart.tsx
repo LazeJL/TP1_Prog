@@ -1,67 +1,59 @@
-import {Button, ProductCartLine} from "tp-kit/components";
-import {clearCart, computeCartTotal, removeLine, updateLine, useStore} from "../hooks/use-cart";
-import {useEffect, useState} from "react";
+"use client";
+import {
+  updateLine,
+  removeLine,
+  useCart,
+  computeCartTotal,
+  clearCart
+} from "@/hooks/use-cart";
+import { Button } from "@arthur.eudeline/starbucks-tp-kit/components/button";
+import { Card } from "@arthur.eudeline/starbucks-tp-kit/components/card";
+import { FormattedPrice } from "@arthur.eudeline/starbucks-tp-kit/components/data-display/formatted-price";
+import { Heading } from "@arthur.eudeline/starbucks-tp-kit/components/heading";
+import { ProductCartLine } from "@arthur.eudeline/starbucks-tp-kit/components/products/product-cart-line";
+import { createOrder } from "@/actions/create-order";
+import { useCallback } from "react";
 
-export default function Cart() {
-    const lines = useStore((state) => state.lines);
-    const [total, setTotal] = useState(computeCartTotal(lines));
+export function Cart() {
+  // On récupère notre panier et on écoute sur tous ses champs
+  const cart = useCart();
 
-    useEffect(() => {
-        setTotal(computeCartTotal(lines));
-    }, [lines]);
+  const handleCreateOrder = useCallback(async () => {
+    // On utilise useCart.getState() pour s'assurer d'avoir des données à jour dans le useCallback
+    await createOrder(useCart.getState());
+    clearCart();
+  }, []);
 
-    return (
-        <div
-            className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white p-8 flex justify-between flex-col"
-        >
-            <p
-                className="text-2xl mb-4"
-            >
-                MON PANIER
-            </p>
-            {
-                lines.map((line) => (
-                    <ProductCartLine
-                        className={"mb-4"}
-                        key={line.product.id}
-                        product={line.product}
-                        qty={line.qty}
-                        onDelete={() => {
-                            removeLine(line.product.id);
-                        }}
-                        onQtyChange={(qty) => {
-                            if (qty === 0) {
-                                removeLine(line.product.id);
-                            } else {
-                                updateLine({product: line.product, qty: qty});
-                            }
-                        }}
-                    />
-                ))
-            }
-            <div
-                className="flex justify-between items-center mt-4"
-            >
-                <p>Total</p>
-                <p>{total.toFixed(2).toString().replace('.', ',') + " €"}</p>
+  return <Card className="space-y-8">
+    {cart.count < 1
+      ? <div className="py-12 text-center">Votre panier est vide</div>
+      : <>
+          <Heading as={"h2"} className="text-sm" >Mon panier</Heading>
+
+          {/* Lines */}
+          <div className="space-y-4">
+            {/* On récupère et liste les lignes du panier */}
+            {cart.lines.map(line => <ProductCartLine
+              key={line.product.id}
+              product={line.product}
+              qty={line.qty}
+              onDelete={() => removeLine(line.product.id)}
+              onQtyChange={(qty) => updateLine({ ...line, qty })}
+            />)}
+          </div>
+
+          {/* Total */}
+          <div className="grid grid-cols-2 text-lg">
+            <div>Total</div>
+            <div className="text-right">
+              <FormattedPrice price={computeCartTotal(cart.lines)} />
             </div>
-            <Button
-                className="mt-8"
-                fullWidth
-                variant={"primary"}
-            >
-                Commander
-            </Button>
-            <Button
-                className="mt-2"
-                fullWidth
-                variant={"outline"}
-                onClick={() => {
-                    clearCart();
-                }}
-            >
-                Vider le panier
-            </Button>
-        </div>
-    )
+          </div>
+
+          {/* Bouton commander */}
+          <Button variant={"primary"} fullWidth onClick={handleCreateOrder}>
+            Commander
+          </Button>
+        </>}
+  </Card>
 }
