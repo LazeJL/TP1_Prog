@@ -9,28 +9,22 @@ export const { signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
       credentials: {
-        username: { label: "Username" },
+        mail: { label: "Email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
-        console.log(req)
+      async authorize(credentials) {
+
+        console.log(credentials)
+
         const user = await prisma.user.findUnique({
-          where : {
-            email: ""
-          }
+          where: { email: (credentials.mail as string) }
         });
 
-        if(user){
-          const password = credentials.password
-          if(!CheckPassword((password as string), user.password)){
-            throw new Error("Password is incorrect !")
-          } else {
-            return await getUser(user.id)
-          }
-        } else {
-          throw new Error("User doesn't exist !")
-          return null
+        if (!user || !CheckPassword((credentials.password as string), user.password)) {
+          throw new Error("Identifiants incorrects !");
         }
+
+        return { id: user.id };
       },
     }),
   ],

@@ -1,16 +1,10 @@
 "use client"
-import { z } from "zod"
 import { useForm, zodResolver } from '@mantine/form';
 import Link from 'next/link';
 import { useState } from "react";
 import { Button, NoticeMessage, PasswordInput, TextInput } from "@arthur.eudeline/starbucks-tp-kit";
-
-
-const schema = z.object({
-    name: z.string().min(1),
-    email: z.string().email(),
-    password: z.string().min(6)
-})
+import { registrationSchema } from "@/schema";
+import { registerAction } from '@/actions/regiser.action';
 
 export default function Page() {
     
@@ -19,7 +13,9 @@ export default function Page() {
     }
 
     const handleSuccess = async (values: typeof form.values) => {
-        setMessageToDisplay(<NoticeMessage type={"success"} onDismiss={() => setMessageToDisplay(null)} message="Votre inscription a bien été prise en compte. Validez votre adresse email pour vous connecter"/>)
+        console.log("TEST HANDLE SUCCESS")
+        setMessageToDisplay(<NoticeMessage type={"success"} onDismiss={() => setMessageToDisplay(null)} message="Votre inscription a bien été prise en compte."/>)
+        registerAction(form.values)
     }
 
     const [messageToDisplay,setMessageToDisplay] = useState(null) as any
@@ -29,20 +25,26 @@ export default function Page() {
             name: "",
             email: "",
             password: ""
-        }
+        },
+        validate: zodResolver(registrationSchema)
     })
 
 
-    return <>
-        {messageToDisplay}
-        <h1>Inscription</h1>
-        <form onSubmit={form.onSubmit(handleSuccess,handleErrors)}>
-            <TextInput label="Nom" placeholder='Entrez votre nom' required {...form.getInputProps("name")} />
-            <TextInput label="Adresse email"  placeholder='lin.guini@barilla.it' required {...form.getInputProps("email")}/>
-            <PasswordInput label="Mot de passe"  placeholder='Entrez votre mot de passe' {...form.getInputProps("password")}/>
-            <Button fullWidth type={"submit"}>S'inscrire</Button>
-            <Link href={"/connexion"}>Déjà un compte, Se connecter</Link>
-        </form> 
-    </>
+    return (
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <div style={{ width: "500px" }}>
+            {messageToDisplay}
+            <h1>INSCRIPTION</h1><br></br>
+            <form onSubmit={form.onSubmit(handleSuccess, handleErrors)}>
+              <TextInput label="Nom" placeholder="Entrez votre nom" required {...form.getInputProps("name")} /><br></br>
+              <TextInput label="Adresse email" placeholder="lin.guini@barilla.it" required {...form.getInputProps("email")} /><br></br>
+              <PasswordInput label="Mot de passe" placeholder="Entrez votre mot de passe" {...form.getInputProps("password")} /><br></br>
+              <Button fullWidth type="submit">S'inscrire</Button><br></br><br></br>
+              <Link href="/connexion" style={{display: "flex", justifyContent: "center", color: "green"}}>Déjà un compte ? Se connecter</Link>
+            </form>
+          </div>
+        </div>
+      );
+      
     
 }
