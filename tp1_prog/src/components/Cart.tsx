@@ -28,7 +28,7 @@ export function Cart() {
     {cart.count < 1
       ? <div className="py-12 text-center">Votre panier est vide</div>
       : <>
-          <Heading as={"h2"} className="text-sm" >Mon panier</Heading>
+          <Heading as={"h2"} className="text-sm" size={"lg"} >Mon panier</Heading>
 
           {/* Lines */}
           <div className="space-y-4">

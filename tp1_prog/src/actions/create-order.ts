@@ -3,7 +3,7 @@
 import { computeCartTotal, computeLineSubtotal } from "@/hooks/use-cart";
 import { CartData } from "@/types";
 import prisma from "@/prisma";
-import { revalidatePath } from "next/cache";
+import { revalidatePath } from "node_modules/next/cache";
 
 export async function createOrder(cart: CartData) {
   await prisma.order.create({

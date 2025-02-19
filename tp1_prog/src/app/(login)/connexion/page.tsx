@@ -1,22 +1,23 @@
 "use client"
-import { z } from "zod"
 import { useForm, zodResolver } from '@mantine/form';
 import Link from 'next/link';
 import { Button, PasswordInput, TextInput } from "@arthur.eudeline/starbucks-tp-kit";
-import { registrationSchema } from "@/schema";
+import { loginSchema} from "@/schema";
+import { loginAction } from "@/actions/login.action";
 
 export default function Page() {
 
     const form = useForm({
         initialValues: {
-            email: "",
-            password: ""
+            email: "Jordan@Lechat.fr",
+            password: "Jordan"
         },
-        validate: zodResolver(registrationSchema)
+        validate: zodResolver(loginSchema)
     })
 
-    const handleSignin = () => {
-        return
+    const handleSignin = async (values: typeof form.values) => {
+        const success = await loginAction(values)
+        console.log(success)
     }
 
     return (

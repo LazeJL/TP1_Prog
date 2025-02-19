@@ -13,9 +13,12 @@ export default function Page() {
     }
 
     const handleSuccess = async (values: typeof form.values) => {
-        console.log("TEST HANDLE SUCCESS")
-        setMessageToDisplay(<NoticeMessage type={"success"} onDismiss={() => setMessageToDisplay(null)} message="Votre inscription a bien été prise en compte."/>)
-        registerAction(form.values)
+        const success = registerAction(values)
+        if((await success).success){
+          setMessageToDisplay(<NoticeMessage type={"success"} onDismiss={() => setMessageToDisplay(null)} message="Votre inscription a bien été prise en compte."/>)
+        } else {
+          setMessageToDisplay(<NoticeMessage type={"error"} onDismiss={() => setMessageToDisplay(null)} message="Cette adresse email est déjà utilisé."/>)
+        }
     }
 
     const [messageToDisplay,setMessageToDisplay] = useState(null) as any
