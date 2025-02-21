@@ -20,8 +20,7 @@ export function Cart() {
 
   const handleCreateOrder = useCallback(async () => {
     // On utilise useCart.getState() pour s'assurer d'avoir des données à jour dans le useCallback
-    const test = await createOrder(useCart.getState());
-    console.log(test)
+    await createOrder(useCart.getState());
     clearCart();
   }, []);
 

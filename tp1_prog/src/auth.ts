@@ -18,8 +18,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
 
         const credentials = result.data
-        
-        console.log("Credentials : ",data)
        
         const user = await prisma.user.findUnique({
           where: { 

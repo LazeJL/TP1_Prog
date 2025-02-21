@@ -18,6 +18,9 @@ export default async function Layout({ children }: { children: ReactNode }) {
   }
   
   const orders = await prisma.order.findMany({
+    where : {
+      userId : user.id
+    },
     orderBy: { createdAt: "desc" }
   });
 

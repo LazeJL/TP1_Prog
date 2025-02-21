@@ -14,8 +14,7 @@ import { useSession } from "next-auth/react";
 
 export const  Menu = function () {
 
-  const user = useSession() 
-  console.log(user)
+  const user = useSession()
   
   return (
     <MenuBar

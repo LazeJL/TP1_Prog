@@ -7,14 +7,9 @@ import { revalidatePath } from "node_modules/next/cache";
 import { getCurrentUser } from "@/lib/get-current-user";
 
 export async function createOrder(cart: CartData) {
-
-  //const user = await getCurrentUser();
-  //console.log("CREATE ORDER USER :")
-
-  //try {
+  try {
 
     const user = await getCurrentUser();
-    console.log("CREATE ORDER USER :",user?.id)
 
     if (!user) {
       return { error: "Vous devez être connecté pour passer une commande.", success: false };
@@ -23,9 +18,9 @@ export async function createOrder(cart: CartData) {
     await prisma.order.create({
       data: {
         total: computeCartTotal(cart.lines),
+        userId: user.id,
         lines: {
           create: cart.lines.map((line) => ({
-            userId: user.id,
             productId: line.product.id,
             qty: line.qty,
             subtotal: computeLineSubtotal(line),
@@ -38,7 +33,7 @@ export async function createOrder(cart: CartData) {
 
     return { error: null, success: true };
 
-  //} catch (error) {
-  //  return { error: "Une erreur est survenue lors de la création de la commande.", success: false };
-  //}
+  } catch (error) {
+    return { error: "Une erreur est survenue lors de la création de la commande.", success: false };
+  }
 }

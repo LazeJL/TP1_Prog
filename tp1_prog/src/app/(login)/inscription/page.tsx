@@ -15,7 +15,6 @@ export default function Page() {
 
     const handleSuccess = async (values: typeof form.values) => {
         const success = registerAction(values)
-        console.log(success)
         if((await success).success){
           toast.success((await success).message)
           await loginAction(values)

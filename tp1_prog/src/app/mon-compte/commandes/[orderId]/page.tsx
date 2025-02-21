@@ -3,7 +3,6 @@ import prisma from "@/prisma";
 import { notFound } from "next/navigation";
 import { OrderDetails } from "./order-details";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { useSession } from "next-auth/react";
 
 type Props = {
   orderId: string;
@@ -11,20 +10,37 @@ type Props = {
 
 export default async function OrderDetailsPage({params}: NextPageProps<Props>) {
 
-  const session = useSession() 
-  const userID = session.data?.user?.id
+  const user = await getCurrentUser() 
 
-  const orderId = parseInt(params.orderId);
-  const order = await prisma.order.findUnique({
-    where: {id: orderId},
-    include: {
-      lines: {
-        include: { product: true }
-      }
+  if(!user){
+    throw new Error("Donnée Invalide !")
+  }
+
+  try{
+
+    const orderId = parseInt(params.orderId);
+
+    if(!orderId){
+      throw new Error("Identifiant de commande invalide !")
     }
-  });
 
-  if (!order) notFound();
+    const order = await prisma.order.findUnique({
+      where: {
+        id: orderId,
+        userId: user.id
+      },
+      include: {
+        lines: {
+          include: { product: true }
+        }
+      }
+    });
 
-  return <OrderDetails order={order} />
+    if (!order) notFound();
+
+    return <OrderDetails order={order} />
+    
+  } catch {
+    throw new Error("Une erreur est survenue !")
+  }
 }

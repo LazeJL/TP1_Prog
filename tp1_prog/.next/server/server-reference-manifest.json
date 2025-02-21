@@ -1,24 +1,54 @@
 {
   "node": {
-    "86a7636366c68f4b0bbe2e12f377157ce20d885d": {
+    "061baf6b9b83b0a7f85a2f91aa078dda646d0eb1": {
       "workers": {
-        "app/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!",
-        "app/mon-compte/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Clogout.action.ts%22%2C%5B%22logoutAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!"
+        "app/mon-compte/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Clogout.action.ts%22%2C%5B%22logoutAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!",
+        "app/mon-compte/commandes/[orderId]/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Clogout.action.ts%22%2C%5B%22logoutAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!",
+        "app/mon-compte/commandes/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Clogout.action.ts%22%2C%5B%22logoutAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!"
       },
       "layer": {
-        "app/page": "action-browser",
-        "app/mon-compte/page": "action-browser"
+        "app/mon-compte/page": "action-browser",
+        "app/mon-compte/commandes/[orderId]/page": "action-browser",
+        "app/mon-compte/commandes/page": "action-browser"
       }
     },
-    "6f670f170be303d405b063002efd21fbc395995d": {
+    "d7b0bf727e121fda233746785d1bb78aff13bc24": {
       "workers": {
-        "app/mon-compte/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Clogout.action.ts%22%2C%5B%22logoutAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!"
+        "app/mon-compte/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Clogout.action.ts%22%2C%5B%22logoutAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!",
+        "app/(login)/connexion/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Clogin.action.ts%22%2C%5B%22loginAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!",
+        "app/(login)/inscription/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Cregiser.action.ts%22%2C%5B%22registerAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Clogin.action.ts%22%2C%5B%22loginAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!",
+        "app/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!",
+        "app/mon-compte/commandes/[orderId]/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Clogout.action.ts%22%2C%5B%22logoutAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!",
+        "app/mon-compte/commandes/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Clogout.action.ts%22%2C%5B%22logoutAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!"
       },
       "layer": {
-        "app/mon-compte/page": "action-browser"
+        "app/mon-compte/page": "action-browser",
+        "app/(login)/connexion/page": "action-browser",
+        "app/(login)/inscription/page": "action-browser",
+        "app/page": "action-browser",
+        "app/mon-compte/commandes/[orderId]/page": "action-browser",
+        "app/mon-compte/commandes/page": "action-browser"
+      }
+    },
+    "250eeed6e3a5d17d52c6ef74403865c1ec6bf7e3": {
+      "workers": {
+        "app/(login)/connexion/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Clogin.action.ts%22%2C%5B%22loginAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!",
+        "app/(login)/inscription/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Cregiser.action.ts%22%2C%5B%22registerAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Clogin.action.ts%22%2C%5B%22loginAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/(login)/connexion/page": "action-browser",
+        "app/(login)/inscription/page": "action-browser"
+      }
+    },
+    "271b7b282a08eb134a0456e90508ceb9115a781d": {
+      "workers": {
+        "app/(login)/inscription/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Cregiser.action.ts%22%2C%5B%22registerAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Clogin.action.ts%22%2C%5B%22loginAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CJlech%5C%5CDesktop%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/(login)/inscription/page": "action-browser"
       }
     }
   },
   "edge": {},
-  "encryptionKey": "DeODX3KN5fu/xR0phCq2Vl7+Ad3UCTlULJJO6B3wdYM="
+  "encryptionKey": "V4YSJJAT73JRA5L9aGMl3P/puAPgo+qJG1gAYP1UZok="
 }

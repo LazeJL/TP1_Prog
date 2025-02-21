@@ -4,7 +4,6 @@ import prisma from "@/prisma";
 export async function getCurrentUser() {
   const session = await auth();
 
-  console.log(session)
   if (!session?.user?.email) {
     return null;
   }

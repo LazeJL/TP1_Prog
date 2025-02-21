@@ -9,7 +9,6 @@ export function LogoutButton() {
 
   const handleLogout = () => {
     startTransition(async () => {
-      console.log("Tentative logout");
       await logoutAction();
     });
   };
