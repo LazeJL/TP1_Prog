@@ -1,24 +1,26 @@
 "use client"
 import { useForm, zodResolver } from '@mantine/form';
 import Link from 'next/link';
-import { useState } from "react";
-import { Button, NoticeMessage, PasswordInput, TextInput } from "@arthur.eudeline/starbucks-tp-kit";
+import { Button, PasswordInput, TextInput } from "@arthur.eudeline/starbucks-tp-kit";
 import { registrationSchema } from "@/schema";
 import { registerAction } from '@/actions/regiser.action';
 import { toast } from 'sonner';
+import { loginAction } from '@/actions/login.action';
 
 export default function Page() {
     
     const handleErrors = () => {
-        toast.error("Une erreur s'est produite !")
+        toast.error("Une erreur s'est produite !! ")
     }
 
     const handleSuccess = async (values: typeof form.values) => {
         const success = registerAction(values)
+        console.log(success)
         if((await success).success){
-          toast.success("Votre inscription a bien été prise en compte.")
+          toast.success((await success).message)
+          await loginAction(values)
         } else {
-          toast.error("Cette adresse email est déjà utilisé.")
+          toast.error((await success).message)
         }
     }
 

@@ -1,32 +1,24 @@
 {
   "node": {
-    "2db53ee74713da141d8f83492c6b7c28758d8bf2": {
-      "workers": {
-        "app/(login)/inscription/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Cregiser.action.ts%22%2C%5B%22registerAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!"
-      },
-      "layer": {
-        "app/(login)/inscription/page": "action-browser"
-      }
-    },
     "86a7636366c68f4b0bbe2e12f377157ce20d885d": {
       "workers": {
-        "app/(login)/inscription/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Cregiser.action.ts%22%2C%5B%22registerAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!",
-        "app/(login)/connexion/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Clogin.action.ts%22%2C%5B%22loginAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!"
+        "app/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!",
+        "app/mon-compte/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Clogout.action.ts%22%2C%5B%22logoutAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!"
       },
       "layer": {
-        "app/(login)/inscription/page": "action-browser",
-        "app/(login)/connexion/page": "action-browser"
+        "app/page": "action-browser",
+        "app/mon-compte/page": "action-browser"
       }
     },
-    "d11ab9c24b3ddbffc8b37f20dbb5de19976c4aff": {
+    "6f670f170be303d405b063002efd21fbc395995d": {
       "workers": {
-        "app/(login)/connexion/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Clogin.action.ts%22%2C%5B%22loginAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!"
+        "app/mon-compte/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Clogout.action.ts%22%2C%5B%22logoutAction%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cjl488963%5C%5CDesktop%5C%5CProgrammation%20Avanc%C3%A9e%5C%5CTP1_Prog%5C%5Ctp1_prog%5C%5Csrc%5C%5Cactions%5C%5Ccreate-order.ts%22%2C%5B%22createOrder%22%5D%5D%5D&__client_imported__=true!"
       },
       "layer": {
-        "app/(login)/connexion/page": "action-browser"
+        "app/mon-compte/page": "action-browser"
       }
     }
   },
   "edge": {},
-  "encryptionKey": "Pep3WM435SakXfAnXdhQeuBerrfF7rwaUMvbzH6uK4s="
+  "encryptionKey": "DeODX3KN5fu/xR0phCq2Vl7+Ad3UCTlULJJO6B3wdYM="
 }

@@ -1,14 +1,9 @@
 {
   "pages": {
-    "/(login)/inscription/page": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(login)/inscription/page.js"
-    ],
-    "/(login)/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(login)/layout.js"
+      "static/chunks/app/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -16,10 +11,15 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/(login)/connexion/page": [
+    "/mon-compte/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(login)/connexion/page.js"
+      "static/chunks/app/mon-compte/page.js"
+    ],
+    "/mon-compte/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/mon-compte/layout.js"
     ]
   }
 }

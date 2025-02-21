@@ -2,15 +2,21 @@ import { NextPageProps } from "@/types";
 import prisma from "@/prisma";
 import { notFound } from "next/navigation";
 import { OrderDetails } from "./order-details";
+import { getCurrentUser } from "@/lib/get-current-user";
+import { useSession } from "next-auth/react";
 
 type Props = {
   orderId: string;
 }
 
 export default async function OrderDetailsPage({params}: NextPageProps<Props>) {
+
+  const session = useSession() 
+  const userID = session.data?.user?.id
+
   const orderId = parseInt(params.orderId);
   const order = await prisma.order.findUnique({
-    where: {id: orderId },
+    where: {id: orderId},
     include: {
       lines: {
         include: { product: true }

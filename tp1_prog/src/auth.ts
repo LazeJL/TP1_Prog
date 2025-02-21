@@ -1,36 +1,39 @@
-import NextAuth, { CredentialsSignin } from "next-auth"
+import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import prisma from "./prisma"
-import { CheckPassword, HashPassword} from "./lib/password"
-import { toast } from "sonner"
+import { CheckPassword} from "./lib/password"
+import { loginSchema } from "./schema"
  
-class InvalidLoginError extends CredentialsSignin {code = "Invalid identifier or password"}
+
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
-      async authorize(credentials) {
+      async authorize(data) {
 
-        console.log(credentials)
+        const result = loginSchema.safeParse(data);
+
+        if(result.error){
+          throw new Error("Donnée invalide")
+        }
+
+        const credentials = result.data
+        
+        console.log("Credentials : ",data)
        
-
         const user = await prisma.user.findUnique({
           where: { 
-            email: (credentials.email as string) 
+            email: credentials.email
           }
         });
 
-        console.log(user);
-
-        console.log("Mot de passe en clair:", credentials.password);
-        console.log("Mot de passe haché en DB:", HashPassword((credentials.password as string)));
-        
-        if (!user || !CheckPassword((credentials.password as string), user.password)) {
-          console.log("Error")
-          throw new InvalidLoginError();
-        } else {
-          return { id: user.id, };  
+        if (!user) {
+          throw new Error("Le compte n'existe pas");
+        } 
+        if(!CheckPassword(credentials.password, user.password)){
+          throw new Error("Identifiant invalide");
         }
+        return { email: user.email };  
       },
     }),
   ],

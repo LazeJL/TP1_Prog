@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 export default function Layout({children}: {children: React.ReactNode}) {
 
     const user = getCurrentUser()
+    
     if(user != null){
         revalidatePath('/mon-compte');
     }

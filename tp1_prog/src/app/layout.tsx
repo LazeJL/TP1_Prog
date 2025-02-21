@@ -4,6 +4,7 @@ import { Lexend as Font } from "next/font/google";
 import "./globals.css";
 import { Footer } from '@arthur.eudeline/starbucks-tp-kit/components/footer';
 import { Menu } from '@/components/menu';
+import { SessionProvider } from 'next-auth/react';
 
 const font = Font({ subsets: ["latin"] });
 
@@ -27,9 +28,11 @@ export default function RootLayout({
   return (
     <html lang="fr" suppressHydrationWarning>
       <body className={font.className} suppressHydrationWarning>
+      <SessionProvider>
         <Menu />
         {children}
         <Footer />
+      </SessionProvider>
       </body>
     </html>
   );

@@ -5,15 +5,30 @@ import { Popover, Transition } from "@headlessui/react";
 import { MenuBar } from "@arthur.eudeline/starbucks-tp-kit/components/menu-bar";
 import { Button } from "@arthur.eudeline/starbucks-tp-kit/components/button";
 import { ShoppingBag, X } from "@phosphor-icons/react/dist/ssr";
-import { Cart } from "./cart";
 import { CartCounter } from "./cart-counter";
+import { User } from "@phosphor-icons/react";
+import { Cart } from "./cart";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 
-export const Menu = function () {
+export const  Menu = function () {
+
+  const user = useSession() 
+  console.log(user)
+  
   return (
     <MenuBar
     trailing={
         <div className="flex flex-row items-center gap-4 justify-end">
+          
+          <button className="focus:outline-none">
+            <Link href="/mon-compte">
+              <User />
+            </Link>
+          </button>
+
+          {user && (
           <Popover as="div" className="flex justify-end">
             {({ open }) => (
               <>
@@ -37,12 +52,13 @@ export const Menu = function () {
                   leaveTo="opacity-0 translate-y-1"
                 >
                   <Popover.Panel className="absolute left-0 sm:left-auto right-0 top-full z-10 mt-6 sm:w-full sm:max-w-sm">
-                    <Cart />
+                    <Cart/>
                   </Popover.Panel>
                 </Transition>
               </>
             )}
           </Popover>
+          )}
         </div>
       }
     />
