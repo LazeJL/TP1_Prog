@@ -16,12 +16,11 @@ export default function Page() {
     })
 
     const handleSignin = async (values: typeof form.values) => {
-        const success = await loginAction(values)
-        console.log(success)
+        await loginAction(values)
     }
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center"    }}>
             <div style={{ width: "500px" }}>
                 <h1>CONNEXION</h1><br></br>
                 <form onSubmit={form.onSubmit(handleSignin)}>

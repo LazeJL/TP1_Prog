@@ -1,6 +1,7 @@
 import { getCurrentUser } from "@/lib/get-current-user";
 import { SectionContainer } from "@arthur.eudeline/starbucks-tp-kit";
 import { revalidatePath } from "next/cache";
+import { Toaster } from "sonner";
 
 export default function Layout({children}: {children: React.ReactNode}) {
 
@@ -11,6 +12,7 @@ export default function Layout({children}: {children: React.ReactNode}) {
 
     return <SectionContainer>
                 <div>
+                <Toaster />
                 {children}
                 </div>
             </SectionContainer>
